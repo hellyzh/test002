@@ -24,7 +24,7 @@ jobs:
       
       - uses: OfficeDev/teamsfx-cli-action@test
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.MY_TOKEN }}
           commands: new
           interactive: false
           app-name: alisaa001
