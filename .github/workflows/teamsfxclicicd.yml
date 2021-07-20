@@ -45,6 +45,15 @@ jobs:
 
       - uses: ./.github/actions/awesome-action
         with:
+          commands: new
+          interactive: false
+          app-name: ruhe07161043
+          capabilities: |
+            tab
+            bot
+
+      - uses: ./.github/actions/awesome-action
+        with:
           commands: provision
           folder: ./ruhe07161043
           subscription: ${{env.AZURE_SUBSCRIPTION_ID}}
