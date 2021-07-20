@@ -32,3 +32,11 @@ jobs:
           capabilities: |
             tab
             bot
+
+      - uses: ./.github/actions/awesome-action
+        with:
+          commands: new
+          interactive: false
+          app-name: hellyspfx07201304
+          host-type: spfx
+          spfx-framework-type: react
