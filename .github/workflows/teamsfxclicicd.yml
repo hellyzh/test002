@@ -22,5 +22,12 @@ jobs:
           repository: OfficeDev/teamsfx-cli-action
           token: ${{secrets.MY_TOKEN}}
       
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - uses: OfficeDev/teamsfx-cli-action@test
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          commands: new
+          interactive: false
+          app-name: alisaa001
+          capabilities: |
+            tab
+            bot
