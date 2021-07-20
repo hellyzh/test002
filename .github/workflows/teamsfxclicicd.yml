@@ -42,3 +42,29 @@ jobs:
           spfx-framework-type: react
           programming-language: typescript
           spfx-webpart-name: helloworld
+
+      - uses: OfficeDev/teamsfx-cli-action@test
+        with:
+          commands: provision
+          folder: ./ruhe07161043
+          subscription: ${{env.AZURE_SUBSCRIPTION_ID}}
+      
+      - uses: OfficeDev/teamsfx-cli-action@test
+        with:
+          commands: deploy
+          folder: ./ruhe07161043
+
+      - uses: OfficeDev/teamsfx-cli-action@test
+        with:
+          commands: validate
+          folder: ./ruhe07161043
+      
+      - uses: OfficeDev/teamsfx-cli-action@test
+        with:
+          commands: build
+          folder: ./ruhe07161043
+
+      - uses: OfficeDev/teamsfx-cli-action@test
+        with:
+          commands: publish
+          folder: ./ruhe07161043
