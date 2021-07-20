@@ -40,3 +40,5 @@ jobs:
           app-name: hellyspfx07201304
           host-type: spfx
           spfx-framework-type: react
+          programming-language: typescript
+          spfx-webpart-name: helloworld
