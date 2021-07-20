@@ -19,12 +19,5 @@ jobs:
       - name: Setup repo
         uses: actions/checkout@v2
       
-      - uses: OfficeDev/teamsfx-cli-action@test
-        with:
-          commands: new
-          interactive: false
-          app-name: alisaa001
-          capabilities: |
-            tab
-            bot
-          token: ${{secrets.MY_TOKEN}}
+      - name: Run a one-line script
+        run: echo Hello, world!
