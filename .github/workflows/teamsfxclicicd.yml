@@ -18,9 +18,6 @@ jobs:
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
-        with: 
-          repository: OfficeDev/teamsfx-cli-action
-          token: ${{secrets.MY_TOKEN}}
       
       - uses: OfficeDev/teamsfx-cli-action@test
         with:
@@ -30,3 +27,4 @@ jobs:
           capabilities: |
             tab
             bot
+          token: ${{secrets.MY_TOKEN}}
