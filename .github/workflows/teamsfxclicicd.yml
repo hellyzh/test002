@@ -20,11 +20,12 @@ jobs:
         uses: actions/checkout@v2
         with: 
           repository: OfficeDev/teamsfx-cli-action
+          ref: refs/heads/test
           token: ${{secrets.MY_TOKEN}}
+          path: ./.github/actions/awesome-action
       
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: ./.github/actions/awesome-action
         with:
-          repo-token: ${{ secrets.MY_TOKEN }}
           commands: new
           interactive: false
           app-name: alisaa001
