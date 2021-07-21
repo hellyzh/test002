@@ -41,7 +41,7 @@ jobs:
       - name: Upload sppkg file
         uses: actions/upload-artifact@v2
         with:
-          name: Upload sppkg file
+          name: spfxproject.sppkg
           path: ./SPFx/sharepoint/solution/*.sppkg
 
       - uses: ./.github/actions/awesome-action
@@ -52,10 +52,10 @@ jobs:
         with:
           commands: build
 
-      - name: Upload sppkg file
+      - name: Upload build file
         uses: actions/upload-artifact@v2
         with:
-          name: Upload sppkg file
+          name: appPackage.zip
           path: ./.fx/appPackage.zip
 
       - uses: ./.github/actions/awesome-action
