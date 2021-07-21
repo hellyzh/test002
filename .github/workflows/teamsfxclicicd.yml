@@ -38,6 +38,12 @@ jobs:
         with:
           commands: deploy
 
+      - name: Upload sppkg file
+        uses: actions/upload-artifact@v2
+        with:
+          name: Upload sppkg file
+          path: ./SPFx/sharepoint/solution/*.sppkg
+
       - uses: ./.github/actions/awesome-action
         with:
           commands: validate
@@ -45,6 +51,12 @@ jobs:
       - uses: ./.github/actions/awesome-action
         with:
           commands: build
+
+      - name: Upload sppkg file
+        uses: actions/upload-artifact@v2
+        with:
+          name: Upload sppkg file
+          path: ./.fx/appPackage.zip
 
       - uses: ./.github/actions/awesome-action
         with:
