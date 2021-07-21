@@ -33,24 +33,19 @@ jobs:
       - uses: ./.github/actions/awesome-action
         with:
           commands: provision
-          folder: ./tmtestspfx0721
       
       - uses: ./.github/actions/awesome-action
         with:
           commands: deploy
-          folder: ./tmtestspfx0721
 
       - uses: ./.github/actions/awesome-action
         with:
           commands: validate
-          folder: ./tmtestspfx0721
       
       - uses: ./.github/actions/awesome-action
         with:
           commands: build
-          folder: ./tmtestspfx0721
 
       - uses: ./.github/actions/awesome-action
         with:
           commands: publish
-          folder: ./tmtestspfx0721
