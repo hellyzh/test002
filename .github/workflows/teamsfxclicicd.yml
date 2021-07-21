@@ -14,6 +14,7 @@ jobs:
       M365_ACCOUNT_NAME: ${{secrets.M365_ACCOUNT_NAME}}
       M365_ACCOUNT_PASSWORD: ${{secrets.M365_ACCOUNT_PASSWORD}}
       M365_TENANT_ID: ${{secrets.M365_TENANT_ID}}
+      CI_ENABLED: true
 
     steps:
       - name: Setup repo
@@ -24,20 +25,12 @@ jobs:
           token: ${{secrets.MY_TOKEN}}
           path: ./.github/actions/awesome-action
       
-      - uses: ./.github/actions/awesome-action
-        with:
-          commands: new
-          interactive: false
-          app-name: alisaa001
-          capabilities: |
-            tab
-            bot
 
       - uses: ./.github/actions/awesome-action
         with:
           commands: new
           interactive: false
-          app-name: hellyspfx07201304
+          app-name: tmtestspfx0721
           host-type: spfx
           spfx-framework-type: react
           programming-language: typescript
@@ -45,35 +38,25 @@ jobs:
 
       - uses: ./.github/actions/awesome-action
         with:
-          commands: new
-          interactive: false
-          app-name: ruhe07161043
-          capabilities: |
-            tab
-            bot
-
-      - uses: ./.github/actions/awesome-action
-        with:
           commands: provision
-          folder: ./ruhe07161043
-          subscription: ${{env.AZURE_SUBSCRIPTION_ID}}
+          folder: ./tmtestspfx0721
       
       - uses: ./.github/actions/awesome-action
         with:
           commands: deploy
-          folder: ./ruhe07161043
+          folder: ./tmtestspfx0721
 
       - uses: ./.github/actions/awesome-action
         with:
           commands: validate
-          folder: ./ruhe07161043
+          folder: ./tmtestspfx0721
       
       - uses: ./.github/actions/awesome-action
         with:
           commands: build
-          folder: ./ruhe07161043
+          folder: ./tmtestspfx0721
 
       - uses: ./.github/actions/awesome-action
         with:
           commands: publish
-          folder: ./ruhe07161043
+          folder: ./tmtestspfx0721
