@@ -24,18 +24,12 @@ jobs:
           ref: refs/heads/test
           token: ${{secrets.MY_TOKEN}}
           path: ./.github/actions/awesome-action
-      
 
-      - uses: ./.github/actions/awesome-action
-        with:
-          commands: new
-          interactive: false
-          app-name: tmtestspfx0721
-          host-type: spfx
-          spfx-framework-type: react
-          programming-language: typescript
-          spfx-webpart-name: helloworld
-
+      - name: Setup root project
+        uses: actions/checkout@v2
+        with: 
+          ref: refs/heads/spfxproject
+ 
       - uses: ./.github/actions/awesome-action
         with:
           commands: provision
