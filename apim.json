@@ -1,0 +1,38 @@
+{ 
+    "openapi": "3.0.1", 
+    "info": { 
+        "title": "tmtest", 
+        "version": "v1" 
+    }, 
+    "paths": {
+        "/getUserProfile": {
+            "get": {
+                "summary": "Get User Profile",
+                "operationId": "get-user-profile",
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "receivedHTTPRequestBody": {
+                                            "type": "string"
+                                        },
+                                        "userInfoMessage": {
+                                            "type": "string"
+                                        },
+                                        "graphClientMessage": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } 
+} 
