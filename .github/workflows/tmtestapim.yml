@@ -1,4 +1,4 @@
-name: SPFx Test
+name: Tab with APIM Project Test
 
 on:
   workflow_dispatch:
@@ -14,50 +14,42 @@ jobs:
       M365_ACCOUNT_NAME: ${{secrets.M365_ACCOUNT_NAME}}
       M365_ACCOUNT_PASSWORD: ${{secrets.M365_ACCOUNT_PASSWORD}}
       M365_TENANT_ID: ${{secrets.M365_TENANT_ID}}
-      CI_ENABLED: true
+      
+      APP_NAME: tmtestsql
 
     steps:
-      - name: Setup root project
-        uses: actions/checkout@v2
-        with: 
-          ref: refs/heads/spfxproject
-
       - name: Setup repo
         uses: actions/checkout@v2
-        with: 
-          repository: OfficeDev/teamsfx-cli-action
-          ref: refs/heads/test
-          token: ${{secrets.MY_TOKEN}}
-          path: ./.github/actions/awesome-action
-
-      - uses: ./.github/actions/awesome-action
         with:
-          commands: provision
-      
-      - uses: ./.github/actions/awesome-action
+          ref: tmtestsql
+
+      - uses: OfficeDev/teamsfx-cli-action@test
         with:
           commands: deploy
 
-      - name: Upload sppkg file
-        uses: actions/upload-artifact@v2
+      - uses: OfficeDev/teamsfx-cli-action@test
         with:
-          name: spfxproject_sppkg_zip
-          path: ./SPFx/sharepoint/solution/*.sppkg
+          commands: provision
+          subscription: ${{env.AZURE_SUBSCRIPTION_ID}}
+      
+      - uses: OfficeDev/teamsfx-cli-action@test
+        with:
+          commands: deploy
 
-      - uses: ./.github/actions/awesome-action
+      - uses: OfficeDev/teamsfx-cli-action@test
         with:
           commands: validate
       
-      - uses: ./.github/actions/awesome-action
+      - uses: OfficeDev/teamsfx-cli-action@test
         with:
           commands: build
 
       - name: Upload build file
         uses: actions/upload-artifact@v2
         with:
-          name: BuildingappPackage_zip
+          name: appPackage_zip
           path: ./.fx/appPackage.zip
 
-      - uses: ./.github/actions/awesome-action
+      - uses: OfficeDev/teamsfx-cli-action@test
         with:
           commands: publish
