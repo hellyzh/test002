@@ -56,7 +56,7 @@ jobs:
           commands: |
             deploy
             frontend-hosting
-            fucntion
+            function
             apim
           open-api-document: apim.json
           api-prefix: apim
