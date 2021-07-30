@@ -7,8 +7,9 @@ on:
       - tmtestapim
 
 jobs:
-  test:
+  test-apim:
     runs-on: ubuntu-latest
+    environment: test_environment
     env:
       AZURE_ACCOUNT_NAME: ${{secrets.AZURE_ACCOUNT_NAME}}
       AZURE_ACCOUNT_PASSWORD: ${{secrets.AZURE_ACCOUNT_PASSWORD}}
@@ -33,7 +34,7 @@ jobs:
             resource
             add
             azure-apim
-          subscription: ${AZURE_SUBSCRIPTION_ID}
+          subscription: ${{secrets.AZURE_SUBSCRIPTION_ID}}
 
       - name: Provision hosting environment
         if: env.TEAMSFX_RUN_PROVISION == 'true'
