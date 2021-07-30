@@ -7,7 +7,7 @@ on:
       - tmtestapim
 
 jobs:
-  test-func-apim:
+  test-apim:
     runs-on: ubuntu-latest
     environment: test_environment
     env:
@@ -28,13 +28,23 @@ jobs:
         with:
           ref: tmtestapim
 
-      - uses: OfficeDev/teamsfx-cli-action@v1
+      - name: Add apim
+        if: env.TEAMSFX_RUN_PROVISION == 'true'
+        uses: OfficeDev/teamsfx-cli-action@v1
         with:
           commands: |
             resource
             add
             azure-apim
           subscription: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+
+      - name: Commit function folder if necessary
+        if: env.TEAMSFX_RUN_PROVISION == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: commit function folder"
+          file_pattern: api/*
+          add_options: "-f"
 
       - name: Provision hosting environment
         if: env.TEAMSFX_RUN_PROVISION == 'true'
