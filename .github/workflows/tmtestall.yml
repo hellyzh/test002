@@ -1,10 +1,13 @@
 name: All In One Project Test
 
 on:
-  workflow_dispatch:
+  # When new commits are pushed onto the branch.
+  push:
+    branches:
+      - tmtestall
 
 jobs:
-  test:
+  test-all-in-one:
     runs-on: ubuntu-latest
     env:
       AZURE_ACCOUNT_NAME: ${{secrets.AZURE_ACCOUNT_NAME}}
@@ -27,7 +30,7 @@ jobs:
 
       - name: Provision hosting environment
         if: env.TEAMSFX_RUN_PROVISION == 'true'
-        uses: OfficeDev/teamsfx-cli-action@v0
+        uses: OfficeDev/teamsfx-cli-action@v1
         with:
           commands: provision
           subscription: ${{env.AZURE_SUBSCRIPTION_ID}}
@@ -42,15 +45,15 @@ jobs:
           file_pattern: .fx/*
           add_options: "-f"
       
-      - uses: OfficeDev/teamsfx-cli-action@v0
+      - uses: OfficeDev/teamsfx-cli-action@v1
         with:
           commands: deploy
 
-      - uses: OfficeDev/teamsfx-cli-action@v0
+      - uses: OfficeDev/teamsfx-cli-action@v1
         with:
           commands: validate
       
-      - uses: OfficeDev/teamsfx-cli-action@v0
+      - uses: OfficeDev/teamsfx-cli-action@v1
         with:
           commands: build
 
@@ -60,6 +63,6 @@ jobs:
           name: appPackage_zip
           path: ./.fx/appPackage.zip
 
-      - uses: OfficeDev/teamsfx-cli-action@v0
+      - uses: OfficeDev/teamsfx-cli-action@v1
         with:
           commands: publish
