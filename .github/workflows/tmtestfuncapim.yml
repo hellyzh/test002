@@ -4,10 +4,10 @@ on:
   # When new commits are pushed onto the branch.
   push:
     branches:
-      - tmtestapim
+      - tmtestfuncapim
 
 jobs:
-  test-func-apim:
+  test-apim:
     runs-on: ubuntu-latest
     environment: test_environment
     env:
@@ -26,7 +26,7 @@ jobs:
       - name: Setup repo
         uses: actions/checkout@v2
         with:
-          ref: tmtestapim
+          ref: tmtestfuncapim
 
       - uses: OfficeDev/teamsfx-cli-action@v1
         with:
