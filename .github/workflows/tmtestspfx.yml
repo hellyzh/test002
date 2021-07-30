@@ -22,11 +22,11 @@ jobs:
         with:
           ref: tmtestspfx
 
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: provision
       
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: deploy
 

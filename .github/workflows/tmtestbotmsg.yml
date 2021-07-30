@@ -21,20 +21,20 @@ jobs:
         with:
           ref: tmtestbotmsg
 
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: provision
           subscription: ${{env.AZURE_SUBSCRIPTION_ID}}
       
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: deploy
 
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: validate
       
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: build
 
@@ -44,6 +44,6 @@ jobs:
           name: appPackage_zip
           path: ./.fx/appPackage.zip
 
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: publish

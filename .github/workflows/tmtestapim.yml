@@ -36,22 +36,22 @@ jobs:
           commands: provision
           subscription: ${{env.AZURE_SUBSCRIPTION_ID}}
       
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: |
-          deploy
-          frontend-hosting
-          fucntion
-          apim
-          open-api-document: apim.json
-          api-prefix: apim
-          api-version: v1
+            deploy
+            frontend-hosting
+            fucntion
+            apim
+            open-api-document: apim.json
+            api-prefix: apim
+            api-version: v1
 
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: validate
       
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: build
 
@@ -61,6 +61,6 @@ jobs:
           name: appPackage_zip
           path: ./.fx/appPackage.zip
 
-      - uses: OfficeDev/teamsfx-cli-action@test
+      - uses: OfficeDev/teamsfx-cli-action@v0
         with:
           commands: publish
