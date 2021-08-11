@@ -4,7 +4,7 @@ on:
   # When new commits are pushed onto the branch.
   push:
     branches:
-      - tmtestsql
+      - tmtestsql-notrun
 
 jobs:
   test-sql:
@@ -21,42 +21,35 @@ jobs:
       
       # If the hosting environment is not provisioned, set this environment variable to true.
       # or if it's provisioned and has not updates, set this environment variable to false.
-
+      TEAMSFX_RUN_PROVISION: true
 
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
         with:
           ref: tmtestsql
-          
-      - name: Generate default.userdata
-        env:
-          USERDATA_TENANT_ID: ${{ secrets.TMTEST_M365_TENANT_ID }}
-          USERDATA_CLIENT_SECRET: ${{ secrets.TMTEST_FUNSQL_CLIENT_SECRET }}
 
-        run: |
-          [ ! -z "${USERDATA_TENANT_ID}" ] && echo "solution.teamsAppTenantId=${USERDATA_TENANT_ID}" >> .fx/default.userdata
-          [ ! -z "${USERDATA_CLIENT_SECRET}" ] && echo "fx-resource-aad-app-for-teams.clientSecret=${USERDATA_CLIENT_SECRET}" >> .fx/default.userdata
-
-
-      - uses: OfficeDev/teamsfx-cli-action@v1
+      - name: Provision hosting environment
+        if: env.TEAMSFX_RUN_PROVISION == 'true'
+        uses: OfficeDev/teamsfx-cli-action@v1
         with:
-          commands: deploy
+          commands: provision
+          subscription: ${{env.AZURE_SUBSCRIPTION_ID}}
+          sql-admin-name: ${{secrets.SQL_ADMIN_NAME}}
+          sql-password: ${{secrets.SQL_PASSWORD}}
 
-      - uses: OfficeDev/teamsfx-cli-action@v1
+      - name: Commit provision configs if necessary
+        if: env.TEAMSFX_RUN_PROVISION == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commands: validate
-      
-      - uses: OfficeDev/teamsfx-cli-action@v1
-        with:
-          commands: build
+          commit_message: "chore: commit provision configs"
+          file_pattern: .fx/env.default.json tabs/.env
+          add_options: "-f"
 
-      - name: Upload build file
+      - name: Upload fx file
         uses: actions/upload-artifact@v2
         with:
-          name: appPackage_zip
-          path: ./appPackage/appPackage.zip
+          name: fx_zip
+          path: ./.fx
 
-      - uses: OfficeDev/teamsfx-cli-action@v1
-        with:
-          commands: publish
+   
