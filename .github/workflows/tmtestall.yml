@@ -20,7 +20,6 @@ jobs:
       
       # If the hosting environment is not provisioned, set this environment variable to true.
       # or if it's provisioned and has not updates, set this environment variable to false.
-      TEAMSFX_RUN_PROVISION: true
       
     steps:
       - name: Setup repo
@@ -28,22 +27,18 @@ jobs:
         with:
           ref: tmtestall
 
-      - name: Provision hosting environment
-        if: env.TEAMSFX_RUN_PROVISION == 'true'
-        uses: OfficeDev/teamsfx-cli-action@v1
-        with:
-          commands: provision
-          subscription: ${{env.AZURE_SUBSCRIPTION_ID}}
-          sql-admin-name: ${{secrets.SQL_ADMIN_NAME}}
-          sql-password: ${{secrets.SQL_PASSWORD}}
+      - name: Build the tabs project
+        run: cd tabs && npm install && npm run build
 
-      - name: Commit provision configs if necessary
-        if: env.TEAMSFX_RUN_PROVISION == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "chore: commit provision configs"
-          file_pattern: .fx/*
-          add_options: "-f"
+      - name: Generate default.userdata
+        env:
+          USERDATA_TENANT_ID: ${{ secrets.TMTEST_M365_TENANT_ID }}
+          USERDATA_CLIENT_SECRET: ${{ secrets.TMTEST_ALL_CLIENT_SECRET }}
+          USERDATA_BOT_PASSWORD: ${{ secrets.TMTEST_ALL_BOT_PASSWORD }}
+        run: |
+          [ ! -z "${TMTEST_M365_TENANT_ID}" ] && echo "solution.teamsAppTenantId=${TMTEST_M365_TENANT_ID}" >> .fx/default.userdata
+          [ ! -z "${USERDATA_CLIENT_SECRET}" ] && echo "fx-resource-aad-app-for-teams.clientSecret=${USERDATA_CLIENT_SECRET}" >> .fx/default.userdata
+          [ ! -z "${USERDATA_BOT_PASSWORD}" ] && echo "fx-resource-bot.botPassword=${USERDATA_BOT_PASSWORD}" >> .fx/default.userdata
       
       - uses: OfficeDev/teamsfx-cli-action@v1
         with:
@@ -61,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: appPackage_zip
-          path: ./.fx/appPackage.zip
+          path: ./appPackage/appPackage.zip
 
       - uses: OfficeDev/teamsfx-cli-action@v1
         with:
