@@ -4,7 +4,7 @@ on:
   # When new commits are pushed onto the branch.
   push:
     branches:
-      - tmtestspfx
+      - tmtestspfx-notrun
 
 jobs:
   test-spfx:
@@ -19,37 +19,24 @@ jobs:
 
       # If the hosting environment is not provisioned, set this environment variable to true.
       # or if it's provisioned and has not updates, set this environment variable to false.
+      TEAMSFX_RUN_PROVISION: true
 
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
         with:
-          ref: tmtestspfx     
-      
-      - uses: OfficeDev/teamsfx-cli-action@v1
-        with:
-          commands: deploy
+          ref: tmtestspfx
 
-      - name: Upload sppkg file
-        uses: actions/upload-artifact@v2
+      - name: Provision hosting environment
+        if: env.TEAMSFX_RUN_PROVISION == 'true'
+        uses: OfficeDev/teamsfx-cli-action@v1
         with:
-          name: sppkg_zip
-          path: ./SPFx/sharepoint/solution/*.sppkg
+          commands: provision
 
-      - uses: OfficeDev/teamsfx-cli-action@v1
+      - name: Commit provision configs if necessary
+        if: env.TEAMSFX_RUN_PROVISION == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commands: validate
-      
-      - uses: OfficeDev/teamsfx-cli-action@v1
-        with:
-          commands: build
-
-      - name: Upload build file
-        uses: actions/upload-artifact@v2
-        with:
-          name: appPackage_zip
-          path: ./appPackage/appPackage.zip
-
-      - uses: OfficeDev/teamsfx-cli-action@v1
-        with:
-          commands: publish
+          commit_message: "chore: commit provision configs"
+          file_pattern: .fx/env.default.json
+          add_options: "-f"

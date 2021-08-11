@@ -4,7 +4,7 @@ on:
   # When new commits are pushed onto the branch.
   push:
     branches:
-      - tmtestbotmsg
+      - tmtestbotmsg-notrun
 
 jobs:
   test-bot:
@@ -20,7 +20,6 @@ jobs:
 
       # If the hosting environment is not provisioned, set this environment variable to true.
       # or if it's provisioned and has not updates, set this environment variable to false.
-      TEAMSFX_RUN_PROVISION: true
 
     steps:
       - name: Setup repo
@@ -28,20 +27,18 @@ jobs:
         with:
           ref: tmtestbotmsg
 
-      - name: Provision hosting environment
-        if: env.TEAMSFX_RUN_PROVISION == 'true'
-        uses: OfficeDev/teamsfx-cli-action@v1
-        with:
-          commands: provision
-          subscription: ${{env.AZURE_SUBSCRIPTION_ID}}
+      - name: Build the project
+        run: cd bots && npm install && npm run build
 
-      - name: Commit provision configs if necessary
-        if: env.TEAMSFX_RUN_PROVISION == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "chore: commit provision configs"
-          file_pattern: .fx/*
-          add_options: "-f"
+      - name: Generate default.userdata
+        env:
+          USERDATA_TENANT_ID: ${{ secrets.TMTEST_M365_TENANT_ID }}
+          USERDATA_CLIENT_SECRET: ${{ secrets.TMTEST_BOTMSG_CLIENT_SECRET }}
+          USERDATA_BOT_PASSWORD: ${{ secrets.TMTEST_BOTMSG_BOT_PASSWORD }}
+        run: |
+          [ ! -z "${TMTEST_M365_TENANT_ID}" ] && echo "solution.teamsAppTenantId=${TMTEST_M365_TENANT_ID}" >> .fx/default.userdata
+          [ ! -z "${TMTEST_BOTMSG_CLIENT_SECRET}" ] && echo "fx-resource-aad-app-for-teams.clientSecret=${TMTEST_BOTMSG_CLIENT_SECRET}" >> .fx/default.userdata
+          [ ! -z "${TMTEST_BOTMSG_BOT_PASSWORD}" ] && echo "fx-resource-bot.botPassword=${TMTEST_BOTMSG_BOT_PASSWORD}" >> .fx/default.userdata
       
       
       - uses: OfficeDev/teamsfx-cli-action@v1
