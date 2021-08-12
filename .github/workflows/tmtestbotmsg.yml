@@ -31,7 +31,7 @@ jobs:
           ref: tmtestbotmsg
 
       - name: Build the project
-        run: cd bots && npm install && npm run build
+        run: cd bot && npm install
 
       - name: Generate default.userdata
         env:
