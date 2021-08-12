@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: appPackage_zip
-          path: ./.fx/appPackage.zip
+          path: ./appPackage/appPackage.zip
 
       - uses: OfficeDev/teamsfx-cli-action@v1
         with:
