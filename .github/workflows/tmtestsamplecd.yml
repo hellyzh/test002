@@ -1,4 +1,4 @@
-name: Tab with APIM Project Test
+name: 'Continuous Deployment'
 
 on:
   # When new commits are pushed onto the branch.
@@ -8,11 +8,12 @@ on:
         description: 'Yes'
         required: true
     branches:
-      - tmtestapim
+      - tmtestsamplecd
 
 jobs:
-  test-apim:
+  buildAndPublish:
     runs-on: ubuntu-latest
+    environment: test_environment
     env:
       AZURE_ACCOUNT_NAME: ${{secrets.AZURE_ACCOUNT_NAME}}
       AZURE_ACCOUNT_PASSWORD: ${{secrets.AZURE_ACCOUNT_PASSWORD}}
@@ -21,38 +22,36 @@ jobs:
       M365_ACCOUNT_NAME: ${{secrets.TMTEST_M365_ACCOUNT_NAME}}
       M365_ACCOUNT_PASSWORD: ${{secrets.TMTEST_M365_ACCOUNT_PASSWORD}}
 
+      
       # If the hosting environment is not provisioned, set this environment variable to true.
       # or if it's provisioned and has not updates, set this environment variable to false.
 
+
     steps:
+      # Setup environment.
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
       - name: Setup repo
         uses: actions/checkout@v2
         with:
-          ref: tmtestapim
+          ref: tmtestsamplecd
 
       - name: Build the project
         run: cd tabs && npm install && npm run build
-      
+          
       - name: Generate default.userdata
         env:
           USERDATA_TENANT_ID: ${{ secrets.TMTEST_M365_TENANT_ID }}
-          USERDATA_CLIENT_SECRET: ${{ secrets.TMTEST_APIM_CLIENT_SECRET }}
-          USERDATA_APIM_CLIENT_PASSWORD: ${{ secrets.TMTEST_APIM_CLIENT_PASSWORD }}
+          USERDATA_CLIENT_SECRET: ${{ secrets.TMTEST_SAMPLECD_CLIENT_SECRET }}
         run: |
           [ ! -z "${USERDATA_TENANT_ID}" ] && echo "solution.teamsAppTenantId=${USERDATA_TENANT_ID}" >> .fx/default.userdata
           [ ! -z "${USERDATA_CLIENT_SECRET}" ] && echo "fx-resource-aad-app-for-teams.clientSecret=${USERDATA_CLIENT_SECRET}" >> .fx/default.userdata
-          [ ! -z "${USERDATA_APIM_CLIENT_PASSWORD}" ] && echo "fx-resource-apim.apimClientAADClientSecret=${USERDATA_APIM_CLIENT_PASSWORD}" >> .fx/default.userdata
 
       - uses: OfficeDev/teamsfx-cli-action@v1
         with:
-          commands: |
-            deploy
-            frontend-hosting
-            function
-            apim
-          open-api-document: apim.json
-          api-prefix: apim
-          api-version: v1
+          commands: deploy
 
       - uses: OfficeDev/teamsfx-cli-action@v1
         with:

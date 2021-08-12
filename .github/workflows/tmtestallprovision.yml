@@ -1,10 +1,14 @@
-name: All In One Project Test
+name: All In One Project Provision Test
 
 on:
   # When new commits are pushed onto the branch.
-  push:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: 'Yes'
+        required: true
     branches:
-      - tmtestall-notrun
+      - tmtestall
 
 jobs:
   test-all-in-one:

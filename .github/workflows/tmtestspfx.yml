@@ -2,7 +2,11 @@ name: SPFx Project Test
 
 on:
   # When new commits are pushed onto the branch.
-  push:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: 'Yes'
+        required: true
     branches:
       - tmtestspfx
 

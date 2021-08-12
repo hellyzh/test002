@@ -2,14 +2,17 @@ name: Tab with function and SQL Project Test
 
 on:
   # When new commits are pushed onto the branch.
-  push:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: 'Yes'
+        required: true
     branches:
       - tmtestsql
 
 jobs:
   test-sql:
     runs-on: ubuntu-latest
-    environment: test_environment
     env:
       AZURE_ACCOUNT_NAME: ${{secrets.AZURE_ACCOUNT_NAME}}
       AZURE_ACCOUNT_PASSWORD: ${{secrets.AZURE_ACCOUNT_PASSWORD}}
@@ -33,11 +36,9 @@ jobs:
         env:
           USERDATA_TENANT_ID: ${{ secrets.TMTEST_M365_TENANT_ID }}
           USERDATA_CLIENT_SECRET: ${{ secrets.TMTEST_FUNSQL_CLIENT_SECRET }}
-
         run: |
           [ ! -z "${USERDATA_TENANT_ID}" ] && echo "solution.teamsAppTenantId=${USERDATA_TENANT_ID}" >> .fx/default.userdata
           [ ! -z "${USERDATA_CLIENT_SECRET}" ] && echo "fx-resource-aad-app-for-teams.clientSecret=${USERDATA_CLIENT_SECRET}" >> .fx/default.userdata
-
 
       - uses: OfficeDev/teamsfx-cli-action@v1
         with:

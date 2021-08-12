@@ -2,14 +2,17 @@ name: Bot and Messaging Project Test
 
 on:
   # When new commits are pushed onto the branch.
-  push:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: 'Yes'
+        required: true
     branches:
-      - tmtestbotmsg-notrun
+      - tmtestbotmsg
 
 jobs:
   test-bot:
     runs-on: ubuntu-latest
-    environment: test_environment
     env:
       AZURE_ACCOUNT_NAME: ${{secrets.AZURE_ACCOUNT_NAME}}
       AZURE_ACCOUNT_PASSWORD: ${{secrets.AZURE_ACCOUNT_PASSWORD}}

@@ -1,15 +1,18 @@
-name: Tab with function and SQL Project Test
+name: Tab with function and SQL Project Provision Test
 
 on:
   # When new commits are pushed onto the branch.
-  push:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: 'Yes'
+        required: true
     branches:
-      - tmtestsql-notrun
+      - tmtestsql
 
 jobs:
   test-sql:
     runs-on: ubuntu-latest
-    environment: test_environment
     env:
       AZURE_ACCOUNT_NAME: ${{secrets.AZURE_ACCOUNT_NAME}}
       AZURE_ACCOUNT_PASSWORD: ${{secrets.AZURE_ACCOUNT_PASSWORD}}
