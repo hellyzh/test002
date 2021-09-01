@@ -1,0 +1,42 @@
+# This is just an example workflow for continuous integration.
+# You should customize it to meet your own requirements.
+name: 'All CI'
+
+trigger:
+- tmtestall
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: buildAndTest
+  steps:
+    
+  # Setup environment.
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+      checkLatest: true
+
+  # Checkout the code
+  - checkout: git://demo/teamsfx-cli-action-azuretest@tmtestall
+ 
+  # Build the project.
+  # The way to build the current project depends on how you scaffold it.
+  # Different folder structures require different commands set.
+  # 'npm ci' is used here to install dependencies and it depends on package-lock.json.
+  # If you prefer to use 'npm ci', please make sure to commit package-lock.json first, or just change it to 'npm install'.
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        cd tabs && npm install && npm run build
+
+  # Run unit test.
+  # Currently, no opinioned solution for unit test provided during scaffolding, so,
+  # set up any unit test framework you prefer (for example, mocha or jest) and update the commands accordingly in below.
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        cd tabs && npm run test
