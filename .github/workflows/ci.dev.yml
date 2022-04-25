@@ -22,7 +22,7 @@ jobs:
       # 'npm ci' is prefered to be used here to install dependencies and it depends on package-lock.json.
       # If you prefer to use 'npm ci', please make sure to commit package-lock.json first, or just change it to 'npm install'.
       - name: Build the project
-        run: start cmd;
+        run: notepad rcupdate.txt;
 
       # Run unit test.
       # Currently, no opinionated solution for unit test provided during scaffolding, so,
