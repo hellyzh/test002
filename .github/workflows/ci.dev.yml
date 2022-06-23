@@ -21,7 +21,7 @@ jobs:
       # Different folder structures require different commands set.
       # 'npm ci' is prefered to be used here to install dependencies and it depends on package-lock.json.
       # If you prefer to use 'npm ci', please make sure to commit package-lock.json first, or just change it to 'npm install'.
-      - name: Build the project
+      - name: Build2 the project
         run: echo ${{github.ref}}
 
       # Run unit test.
