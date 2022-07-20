@@ -29,3 +29,8 @@ jobs:
       # set up any unit test framework you prefer (for example, mocha or jest) and update the commands accordingly in below.
       # - name: Run Unit Test
       #   run: npm run test
+
+      - name: hello
+        uses: actions/hello-world-javascript-action@main
+        with:
+          who-to-greet: 'Mona the Octocat'
