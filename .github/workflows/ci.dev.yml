@@ -8,8 +8,6 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
-    outputs:
-      cases: [a,b]
     steps:
       - name: echo element
-        run: echo "::set-output name=cases::$tests"  
+        run: echo "::set-output name=cases::abc"  
