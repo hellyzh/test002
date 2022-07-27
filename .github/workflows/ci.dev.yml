@@ -10,7 +10,10 @@ jobs:
     runs-on: windows-latest
     outputs:
       cases: [a,b]
-    run: echo "::set-output name=cases::$tests"
+    steps:
+      - name: echo element
+        run: echo "::set-output name=cases::$tests"
+    
 
   buildAndTest:
     runs-on: ubuntu-latest
