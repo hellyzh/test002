@@ -4,6 +4,10 @@ name: 'Continuous Integration'
 on:
   # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
+  inputs:
+      cases:
+        description: 'specific cases to be excuted. Sample: ["./aad/a.tests.ts", "./bot/b.tests.ts"]. Set empty to run all cases'
+        required: false
   
 jobs:
   setup:
@@ -13,7 +17,7 @@ jobs:
     steps:
       - name: echo element
         id: job1
-        run: echo "::set-output name=cases::['abc','efg']"  
+        run: echo "::set-output name=cases::[10,11]"  
 
   buildAndTest:
     runs-on: ubuntu-latest
@@ -21,7 +25,7 @@ jobs:
         strategy:
       fail-fast: false
       matrix:
-        cases: ${{ fromJson(needs.setup.outputs.cases) }}
+        cases: ${{ needs.setup.outputs.cases }}
     name: ${{ matrix.cases }}
     steps:
       # Setup environment.
