@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: echo element
         id: job1
-        run: echo "::set-output name=cases::abc"  
+        run: echo "::set-output name=cases::['abc','efg']"  
 
   buildAndTest:
     runs-on: ubuntu-latest
@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cases: [${{ needs.setup.outputs.cases }}]
+        cases: ${{ needs.setup.outputs.cases }}
     name: ${{ matrix.cases }}
     steps:
       # Setup environment.
