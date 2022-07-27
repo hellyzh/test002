@@ -8,10 +8,13 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
+    outputs:
+      cases: ${{steps.job1.outputs.cases}}
     steps:
       - name: echo element
+        id: job1
         run: echo "::set-output name=cases::abc"  
-        
+
   buildAndTest:
     runs-on: ubuntu-latest
     strategy:
