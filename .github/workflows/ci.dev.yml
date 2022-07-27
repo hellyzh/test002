@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cases: ${{ needs.setup.outputs.cases }}
+        cases: ${{ fromJson(needs.setup.outputs.cases) }}
     name: ${{ matrix.cases }}
     steps:
       # Setup environment.
