@@ -4,10 +4,6 @@ name: 'Continuous Integration'
 on:
   # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
-  inputs:
-      cases:
-        description: 'specific cases to be excuted. Sample: ["./aad/a.tests.ts", "./bot/b.tests.ts"]. Set empty to run all cases'
-        required: false
   
 jobs:
   setup:
