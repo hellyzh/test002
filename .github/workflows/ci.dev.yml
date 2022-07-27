@@ -18,7 +18,11 @@ jobs:
   buildAndTest:
     runs-on: ubuntu-latest
     needs: setup
-    name: ${{ needs.setup.outputs.cases }}
+        strategy:
+      fail-fast: false
+      matrix:
+        cases: ${{ fromJson(needs.setup.outputs.cases) }}
+    name: ${{ matrix.cases }}
     steps:
       # Setup environment.
       - uses: actions/setup-node@v2
