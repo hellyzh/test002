@@ -5,9 +5,20 @@ on:
   # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
 jobs:
+
+  setup:
+    runs-on: windows-latest
+    outputs:
+      cases: [a,b]
+    run: echo "::set-output name=cases::$tests"
+
   buildAndTest:
     runs-on: ubuntu-latest
-    name: [a, b, c]
+    strategy:
+      fail-fast: false
+      matrix:
+        cases: ${{ jobs.setup.outputs.cases) }}
+    name: ${{ matrix.cases }}
     steps:
       # Setup environment.
       - uses: actions/setup-node@v2
