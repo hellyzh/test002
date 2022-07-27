@@ -7,7 +7,7 @@ on:
 jobs:
   buildAndTest:
     runs-on: ubuntu-latest
-    name: ["a", "b", "c"]
+    name: [a, b, c]
     steps:
       # Setup environment.
       - uses: actions/setup-node@v2
