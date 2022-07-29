@@ -5,7 +5,7 @@ on:
   # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
   schedule:
-    - cron: "15 8 * * *"
+    - cron: "40 8 * * *"
   
 jobs:
   setup:
@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: echo element
         id: job1
-        run: echo "::set-output name=cases::[10,11]"  
+        run: echo "::set-output name=cases::[10]"  
 
   buildAndTest:
     runs-on: ubuntu-latest
