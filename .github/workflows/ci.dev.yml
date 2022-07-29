@@ -5,7 +5,8 @@ on:
   # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
   schedule:
-    - cron: "50 7,8,9,10 * * *"
+    - cron: "45 9 * * *"
+    - cron: "50 9 * * *"
   
 jobs:
   setup:
@@ -32,23 +33,23 @@ jobs:
           node-version: '14'
 
       - name: Checkout the code
+        if: github.event.schedule == '45 9 * * *' || ${{ github.event_name == 'workflow_dispatch' }}
+        uses: actions/checkout@v2
+
+      - name: Checkout the code
+        if: github.event.schedule == '50 9 * * *'
         uses: actions/checkout@v2
         with:
           ref: dev
  
-      # Build the project.
-      # The way to build the current project depends on how you scaffold it.
-      # Different folder structures require different commands set.
-      # 'npm ci' is prefered to be used here to install dependencies and it depends on package-lock.json.
-      # If you prefer to use 'npm ci', please make sure to commit package-lock.json first, or just change it to 'npm install'.
       - name: Build the project
         run: echo ${{github.ref}}
 
-      # Run unit test.
-      # Currently, no opinionated solution for unit test provided during scaffolding, so,
-      # set up any unit test framework you prefer (for example, mocha or jest) and update the commands accordingly in below.
-      # - name: Run Unit Test
-      #   run: npm run test
+      - name: Build the project
+        run: cat devupdate.txt
+
+      - name: main-dev
+        run: cat devupdate.txt
 
       - name: hello
         uses: hellyzh/test003@main
