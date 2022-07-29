@@ -5,8 +5,7 @@ on:
   # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
   schedule:
-    - cron: "*/56 * * * *"
-      branches: dev
+    - cron: "*/5 * * * *"
   
 jobs:
   setup:
@@ -34,6 +33,8 @@ jobs:
 
       - name: Checkout the code
         uses: actions/checkout@v2
+        with:
+          ref: dev
  
       # Build the project.
       # The way to build the current project depends on how you scaffold it.
