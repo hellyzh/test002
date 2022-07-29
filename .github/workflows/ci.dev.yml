@@ -5,7 +5,7 @@ on:
   # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
   schedule:
-    - cron: "55 * * * *"
+    - cron: "*/56 * * * *"
       branches: dev
   
 jobs:
