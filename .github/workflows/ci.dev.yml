@@ -19,7 +19,15 @@ jobs:
         id: job1
         run: |
           echo "::set-output name=cases::[10]"
-          echo "::set-output name=tv2::test-tv2"   
+          echo "::set-output name=tv2::test-tv2"
+
+      - name: element2
+        id: job-id
+        run: |
+          echo "::set-output name=ele-tt::ele-tt-value"
+
+      - name: echo test
+        run: echo ${{ setup.job1.tv2 }} ${{ setup.job-id.ele-tt }}
 
   buildAndTest:
     runs-on: ubuntu-latest
