@@ -25,6 +25,9 @@ jobs:
         id: job-id
         run: |
           echo "::set-output name=ele-tt::ele-tt-value"
+          if [github.ref_name == main]; then
+            echo main
+          fi
 
       - name: echo test
         run: echo ${{ steps.job1.outputs.tv2 }} ${{ steps.job-id.outputs.ele-tt }}
