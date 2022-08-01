@@ -18,7 +18,7 @@ jobs:
       - name: echo element
         id: job1
         run: echo "::set-output name=cases::[10]"
-          echo "::set-output name=tv2::"test-tv2""   
+          echo "::set-output name=tv2::test-tv2"   
 
   buildAndTest:
     runs-on: ubuntu-latest
