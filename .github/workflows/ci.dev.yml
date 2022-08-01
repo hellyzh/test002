@@ -5,8 +5,8 @@ on:
   # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
   schedule:
-    - cron: "45 9 * * *"
-    - cron: "50 9 * * *"
+- cron: "5 3 * * *"
+- cron: "10 3 * * *"
   
 jobs:
   setup:
@@ -33,11 +33,11 @@ jobs:
           node-version: '14'
 
       - name: Checkout the code
-        if: github.event.schedule == '45 9 * * *' || ${{ github.event_name == 'workflow_dispatch' }}
+        if: github.event.schedule == '5 3 * * *' || ${{ github.event_name == 'workflow_dispatch' }}
         uses: actions/checkout@v2
 
       - name: Checkout the code
-        if: github.event.schedule == '50 9 * * *'
+        if: github.event.schedule == '10 3 * * *'
         uses: actions/checkout@v2
         with:
           ref: dev
