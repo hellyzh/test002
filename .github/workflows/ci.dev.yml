@@ -25,7 +25,9 @@ jobs:
         id: job-id
         run: |
           echo "::set-output name=ele-tt::ele-tt-value"
-          if [github.ref_name == main]; then
+          echo  ${{github.ref_name}}
+          echo again
+          if [ ${{github.ref_name == main}}]; then
             echo main
           fi
 
