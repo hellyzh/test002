@@ -17,7 +17,8 @@ jobs:
     steps:
       - name: echo element
         id: job1
-        run: echo "::set-output name=cases::[10]"
+        run: |
+          echo "::set-output name=cases::[10]"
           echo "::set-output name=tv2::test-tv2"   
 
   buildAndTest:
@@ -27,7 +28,6 @@ jobs:
       fail-fast: false
       matrix:
         cases: ${{ fromJson(needs.setup.outputs.cases) }}
-        tv2: ${{needs.setup.outputs.tv2}}
     name: ${{ matrix.cases }}
     steps:
       # Setup environment.
@@ -52,7 +52,7 @@ jobs:
         run: cat devupdate.txt
 
       - name: print variable2
-        run: echo ${{ matrix.tv2 }}
+        run: echo ${{ needs.setup.outputs.tv2 }}
 
       - name: main-dev
         run: cat devupdate.txt
