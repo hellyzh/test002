@@ -27,7 +27,7 @@ jobs:
           echo "::set-output name=ele-tt::ele-tt-value"
 
       - name: echo test
-        run: echo ${{ setup.job1.tv2 }} ${{ setup.job-id.ele-tt }}
+        run: echo ${{ setup.job1.outputs.tv2 }} ${{ setup.job-id.outputs.ele-tt }}
 
   buildAndTest:
     runs-on: ubuntu-latest
