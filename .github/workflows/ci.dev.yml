@@ -44,6 +44,8 @@ jobs:
       matrix:
         cases: ${{ fromJson(needs.setup.outputs.cases) }}
     name: ${{ matrix.cases }}
+    outputs:
+      v1: ${{steps.jobb1.outputs.v1}}
     steps:
       # Setup environment.
       - uses: actions/setup-node@v2
@@ -72,7 +74,33 @@ jobs:
       - name: main-dev
         run: cat devupdate.txt
 
+      - name: echo element
+        id: jobb1
+        run: |
+          echo "::set-output name=v1::v1v"
+
       - name: hello
         uses: hellyzh/test003@main
         with:
           who-to-greet: 'Mona the Octocat'
+
+  test2:
+    runs-on: ubuntu-latest
+    needs: |
+      setup
+      buildAndTest
+    strategy:
+      fail-fast: false
+      matrix:
+        cases: ${{ fromJson(needs.setup.outputs.cases) }}
+    name: ${{ matrix.cases }}
+    steps:
+      # Setup environment.
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: print variable2
+        run: |
+          echo ${{ needs.setup.outputs.tv2 }}
+          echo ${{ needs.buildAndTest.outputs.v1 }}
