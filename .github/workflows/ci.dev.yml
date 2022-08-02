@@ -86,8 +86,7 @@ jobs:
 
   test2:
     runs-on: ubuntu-latest
-    needs: |
-      setup
+    needs: setup
     steps:
       # Setup environment.
       - uses: actions/setup-node@v2
