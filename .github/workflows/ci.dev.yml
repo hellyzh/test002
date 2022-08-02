@@ -87,7 +87,7 @@ jobs:
   test2:
     runs-on: ubuntu-latest
     needs: |
-      buildAndTest
+      setup
     steps:
       # Setup environment.
       - uses: actions/setup-node@v2
@@ -97,4 +97,4 @@ jobs:
       - name: print variable2
         run: |
           echo a
-          echo ${{ needs.buildAndTest.outputs.v1 }}
+          echo ${{ needs.setup.outputs.tv2 }}
