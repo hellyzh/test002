@@ -36,7 +36,7 @@ jobs:
       - name: Check if scheduled test
         id: check-if-scheduled-test
         run: |
-        if [ "ab" == "ab"]; then
+        if [ "ab" == "ab" ]; then
           echo "::set-output name=scheduled-stable-release::true"
         elif [ "ac" == "ac" ]; then
           echo "::set-output name=scheduled-daily-release::true"
