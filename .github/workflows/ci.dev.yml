@@ -36,13 +36,13 @@ jobs:
       - name: Check if scheduled test
         id: check-if-scheduled-test
         run: |
-        if [ "ab" == "ab" ]; then
-          echo "::set-output name=scheduled-stable-release::true"
-        elif [ "ac" == "ac" ]; then
-          echo "::set-output name=scheduled-daily-release::true"
-        else
-          echo test
-        fi
+          if [ ${{ github.event.schedule }} == '5 6 * * *' ]; then
+            echo "::set-output name=scheduled-stable-release::true"
+          elif [ ${{ github.event.schedule }} == '10 6 * * *' ]; then
+            echo "::set-output name=scheduled-daily-release::true"
+          else
+           echo test
+          fi
 
       - name: echo test
         run: echo ${{ steps.job1.outputs.tv2 }} ${{ steps.job-id.outputs.ele-tt }}
