@@ -33,6 +33,17 @@ jobs:
             echo other
           fi
 
+      - name: Check if scheduled test
+        id: check-if-scheduled-test
+        run: |
+        if [ ${{ github.event.schedule }} == '5 6 * * *' ]; then
+          echo "::set-output name=scheduled-stable-release::true"
+        fi
+
+        if [ ${{ github.event.schedule }} == '10 6 * * *' ]; then
+          echo "::set-output name=scheduled-daily-release::true"
+        fi
+
       - name: echo test
         run: echo ${{ steps.job1.outputs.tv2 }} ${{ steps.job-id.outputs.ele-tt }}
 
