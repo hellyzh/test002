@@ -9,8 +9,8 @@ on:
         description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
         required: false
   schedule:
-    - cron: "5 6 * * *"
-    - cron: "10 6 * * *"
+    - cron: "0 2 * * *"
+    - cron: "0 6,9 * * *"
   
 jobs:
   setup:
@@ -24,6 +24,19 @@ jobs:
         run: |
           echo "::set-output name=cases::[10]"
           echo "::set-output name=tv2::test-tv2"
+
+      - name: Check if scheduled test
+        id: check-if-scheduled-test
+        run: |
+          if [ ! -z "${{ github.event.schedule }}" ]; then
+            if [ "${{ github.event.schedule }}" == '0 2 * * *' ]; then
+              echo "::set-output name=scheduled-stable-release::true"
+            fi
+
+            if [ "${{ github.event.schedule }}" == '0 6,9 * * *' ]; then
+              echo "::set-output name=scheduled-daily-release::true"
+            fi
+          fi
 
       - name: Get release tag
         id: get-release-tag
@@ -40,7 +53,19 @@ jobs:
               echo "::set-output name=release-tag::$releaseTag"
             fi
           else
-            echo "::set-output name=release-tag::alphaelse"
+            if [ "${{ github.ref_name }}" == 'hellyzh/pipeline' ]; then
+              if [ ${{ steps.check-if-scheduled-test.outputs.scheduled-daily-release }} ]; then
+                echo "::set-output name=release-tag::alpha"
+              else
+                echo "::set-output name=release-tag::stable"
+              fi
+            elif [ "${{ github.ref_name }}" == 'dev' ]; then
+              echo "::set-output name=release-tag::alpha"
+            elif [ "${{ github.ref_name }}" == 'rc' ]; then
+              echo "::set-output name=release-tag::rc"
+            else
+              echo "::set-output name=release-tag::alpha"
+            fi
           fi
 
       - name: print release tag
