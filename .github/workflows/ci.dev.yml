@@ -35,7 +35,7 @@ jobs:
 
       - name: print release tag
         run: |          
-          echo ${{ steps.get-release-tag.outputs.release-tag}}
+          echo ${{ steps.get-release-tag.outputs.release-tag }}
 
       - name: element2
         id: job-id
