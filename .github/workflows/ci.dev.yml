@@ -30,11 +30,11 @@ jobs:
         run: |          
           releaseTag='${{ github.event.inputs.tag }}'
           if [ ! -z "$releaseTag" ]; then             
-            if [$releaseTag == 'stable' ]; then
+            if [ "$releaseTag" == 'stable' ]; then
               echo "::set-output name=release-tag::stable"
-            elif [$releaseTag == 'rc' ]; then
+            elif [ "$releaseTag" == 'rc' ]; then
               echo "::set-output name=release-tag::rc"
-            elif [$releaseTag == 'alpha' ]; then
+            elif [ "$releaseTag" == 'alpha' ]; then
               echo "::set-output name=release-tag::alpha"
             else
               echo "::set-output name=release-tag::$releaseTag"
