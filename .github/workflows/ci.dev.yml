@@ -9,8 +9,8 @@ on:
         description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
         required: false
   schedule:
-    - cron: "0 2 * * *"
-    - cron: "0 6,9 * * *"
+    - cron: "35 7 * * *"
+    - cron: "40 7,9 * * *"
   
 jobs:
   setup:
@@ -29,11 +29,11 @@ jobs:
         id: check-if-scheduled-test
         run: |
           if [ ! -z "${{ github.event.schedule }}" ]; then
-            if [ "${{ github.event.schedule }}" == '0 2 * * *' ]; then
+            if [ "${{ github.event.schedule }}" == '35 7 * * *' ]; then
               echo "::set-output name=scheduled-stable-release::true"
             fi
 
-            if [ "${{ github.event.schedule }}" == '0 6,9 * * *' ]; then
+            if [ "${{ github.event.schedule }}" == '40 7,9 * * *' ]; then
               echo "::set-output name=scheduled-daily-release::true"
             fi
           fi
@@ -53,7 +53,7 @@ jobs:
               echo "::set-output name=release-tag::$releaseTag"
             fi
           else
-            if [ "${{ github.ref_name }}" == 'hellyzh/pipeline' ]; then
+            if [ "${{ github.ref_name }}" == 'main' ]; then
               if [ ${{ steps.check-if-scheduled-test.outputs.scheduled-daily-release }} ]; then
                 echo "::set-output name=release-tag::alpha"
               else
@@ -71,6 +71,13 @@ jobs:
       - name: print release tag
         run: |          
           echo ${{ steps.get-release-tag.outputs.release-tag }}
+
+      - name: print scheduled variable
+        run: |
+          echo stable_variable      
+          echo ${{ steps.check-if-scheduled-test.outputs.scheduled-stable-release }}
+          echo daily_variable
+          echo ${{ steps.check-if-scheduled-test.outputs.scheduled-daily-release }}
 
       - name: element2
         id: job-id
