@@ -23,10 +23,9 @@ jobs:
           echo "::set-output name=tv2::test-tv2"
 
       - name: Setup max attempts (Win)
-        if: matrix.os == 'self-hosted' || matrix.os == 'windows-latest'
         id: setup-max-attempts
         run: |
-          if ("${{ matrix.os }}" -eq 'windows-latest') -or ("${{ matrix.test-case }}" -like 'remotedebug')) {
+          if (("abc" -eq 'windows-latest') -and ("${{ github.event.inputs.tag }}" -like 'remotedebug')) {
             echo "::set-output name=max-attempt::1"
           } else {
             echo "::set-output name=max-attempt::2"
