@@ -84,13 +84,6 @@ jobs:
             echo other
           fi
 
-      - name: Check if scheduled test
-        id: check-if-scheduled-test
-        run: |
-          if [ ! -z ${{ github.event.schedule }} ]; then
-           echo test
-          fi
-
       - name: echo test
         run: echo ${{ steps.job1.outputs.tv2 }} ${{ steps.job-id.outputs.ele-tt }}
 
