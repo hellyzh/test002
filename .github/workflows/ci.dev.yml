@@ -143,6 +143,22 @@ jobs:
         run: |
           echo "::set-output name=v1::v1v"
 
+      - name: setup max attempts
+        id: setup-max-attempts
+        run: |
+          echo "::set-output name=max-attempt::2"
+
+      - name: Run UI Test (Windows)
+        id: test-self-hosted
+        if: matrix.os == 'self-hosted' || (matrix.os == 'windows-latest' && github.ref == 'refs/heads/main')
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 50
+          max_attempts: ${{ steps.setup-max-attempts.outputs.max-attempt}}
+          command: |
+            echo abc
+            exit 1 
+
       - name: hello
         uses: hellyzh/test003@main
         with:
