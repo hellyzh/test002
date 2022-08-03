@@ -11,6 +11,10 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
+    inputs:
+      tag:
+        description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
+        required: false
     outputs:
       cases: ${{steps.job1.outputs.cases}}
       tv2: ${{steps.job1.outputs.tv2}}
@@ -20,6 +24,18 @@ jobs:
         run: |
           echo "::set-output name=cases::[10]"
           echo "::set-output name=tv2::test-tv2"
+
+      - name: Get release tag
+        id: get-release-tag
+        run: |          
+          releaseTag='${{ github.event.inputs.tag }}'
+          if [ ! -z "$releaseTag" ]; then             
+            echo "::set-output name=release-tag::$releaseTag"
+          fi
+
+      - name: print release tag
+        run: |          
+          echo ${{ steps.get-release-tag.outputs.release-tag}}
 
       - name: element2
         id: job-id
