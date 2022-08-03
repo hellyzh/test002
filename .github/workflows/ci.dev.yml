@@ -4,10 +4,10 @@ name: 'Continuous Integration'
 on:
   # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
-  inputs:
-    tag:
-    description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
-    required: false
+    inputs:
+      tag:
+      description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
+      required: false
   schedule:
     - cron: "5 6 * * *"
     - cron: "10 6 * * *"
