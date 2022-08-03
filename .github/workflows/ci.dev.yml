@@ -9,8 +9,8 @@ on:
         description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
         required: false
   schedule:
-    - cron: "55 6 * * *"
-    - cron: "0 7,9 * * *"
+    - cron: "25 7 * * *"
+    - cron: "20 7,9 * * *"
   
 jobs:
   setup:
@@ -29,11 +29,11 @@ jobs:
         id: check-if-scheduled-test
         run: |
           if [ ! -z "${{ github.event.schedule }}" ]; then
-            if [ "${{ github.event.schedule }}" == '55 6 * * *' ]; then
+            if [ "${{ github.event.schedule }}" == '25 7 * * *' ]; then
               echo "::set-output name=scheduled-stable-release::true"
             fi
 
-            if [ "${{ github.event.schedule }}" == '0 7,9 * * *' ]; then
+            if [ "${{ github.event.schedule }}" == '20 7,9 * * *' ]; then
               echo "::set-output name=scheduled-daily-release::true"
             fi
           fi
