@@ -150,7 +150,6 @@ jobs:
 
       - name: Run UI Test (Windows)
         id: test-self-hosted
-        if: matrix.os == 'self-hosted' || (matrix.os == 'windows-latest' && github.ref == 'refs/heads/main')
         uses: nick-fields/retry@v2
         with:
           timeout_minutes: 50
