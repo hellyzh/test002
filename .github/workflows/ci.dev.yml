@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-      description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
-      required: false
+        description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
+        required: false
   schedule:
     - cron: "5 6 * * *"
     - cron: "10 6 * * *"
