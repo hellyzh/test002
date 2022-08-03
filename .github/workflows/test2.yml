@@ -1,0 +1,38 @@
+# This is just an example workflow for continuous integration.
+# You should customize it to meet your own requirements.
+name: 'Continuous Integration'
+on:
+  # Manually trigger this workflow, and you should pick the right branch.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
+        required: false
+  
+jobs:
+  setup:
+    runs-on: windows-latest
+    outputs:
+      cases: ${{steps.job1.outputs.cases}}
+      tv2: ${{steps.job1.outputs.tv2}}
+    steps:
+      - name: echo element
+        id: job1
+        run: |
+          echo "::set-output name=cases::[10]"
+          echo "::set-output name=tv2::test-tv2"
+
+      - name: Setup max attempts (Win)
+        if: matrix.os == 'self-hosted' || matrix.os == 'windows-latest'
+        id: setup-max-attempts
+        run: |
+          if ("${{ matrix.os }}" -eq 'windows-latest') -or ("${{ matrix.test-case }}" -like 'remotedebug')) {
+            echo "::set-output name=max-attempt::1"
+          } else {
+            echo "::set-output name=max-attempt::2"
+          }
+      
+      - name: get attempts
+        run: |
+          echo ${{ steps.setup-max-attempts.outputs.max-attempt}}
+
