@@ -42,13 +42,13 @@ jobs:
 
       - name: get attempts2
         run: |
-          if [ "${{ github.event_name }}" == 'push' ]; then
-            echo push1
-          else
-            if [ "${{ github.event_name }}" == 'push2' ]; then
+          if [ "${{ github.event_name }}" != 'push2' ]; then
+            if [ "${{ github.event_name }}" == 'push' ]; then
               echo push2
             else
               echo push3
             fi
+          else
+            echo push4
           fi
 
