@@ -28,7 +28,7 @@ jobs:
           echo "::set-output name=tv2::test-tv2"
       - name: get attempts2
         run: |
-          if [ "${{ github.event_name }}" != 'push2' ]; then
+          if [ "${{ github.event_name }}" == 'push2' ]; then
             echo push4
           else
             if [ "${{ github.event_name }}" == 'push' ]; then
