@@ -45,7 +45,7 @@ jobs:
           if [ "${{ github.event_name }}" == 'push' ]; then
             echo push1
           else
-            if [ "${{ github.event_name }}" == 'push' ]; then
+            if [ "${{ github.event_name }}" == 'push2' ]; then
               echo push2
             else
               echo push3
