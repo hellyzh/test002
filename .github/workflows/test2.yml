@@ -40,9 +40,15 @@ jobs:
         run: |
           echo ${{ steps.setup-max-attempts.outputs.max-attempt}}
 
-      - name: get attempts
+      - name: get attempts2
         run: |
-          echo pushname
-          echo ${{ github.event_name }}
-          echo pushname
+          if [ "${{ github.event_name }}" == 'push' ]; then
+            echo push1
+          else
+            if [ "${{ github.event_name }}" == 'push' ]; then
+              echo push2
+            else
+              echo push3
+            fi
+          fi
 
