@@ -8,6 +8,11 @@ on:
       tag:
         description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
         required: false
+  push:
+   branches:
+    - main
+    - dev
+    - rc
   
 jobs:
   setup:
