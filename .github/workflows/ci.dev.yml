@@ -119,16 +119,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-
-      - name: Checkout the code
-        if: github.event.schedule == '5 6 * * *' || ${{ github.event_name == 'workflow_dispatch' }}
-        uses: actions/checkout@v2
-
-      - name: Checkout the code
-        if: github.event.schedule == '10 6 * * *'
-        uses: actions/checkout@v2
-        with:
-          ref: dev
  
       - name: Build the project
         run: echo ${{github.ref}}
@@ -146,21 +136,6 @@ jobs:
         id: jobb1
         run: |
           echo "::set-output name=v1::v1v"
-
-      - name: setup max attempts
-        id: setup-max-attempts
-        run: |
-          echo "::set-output name=max-attempt::2"
-
-      - name: Run UI Test (Windows)
-        id: test-self-hosted
-        uses: nick-fields/retry@v2
-        with:
-          timeout_minutes: 50
-          max_attempts: ${{ steps.setup-max-attempts.outputs.max-attempt}}
-          command: |
-            echo abc
-            exit 1 
 
       - name: hello
         uses: hellyzh/test003@main
