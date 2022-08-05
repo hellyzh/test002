@@ -9,8 +9,8 @@ on:
         description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
         required: false
   schedule:
-    - cron: "35 1 * * *"
-    - cron: "40 1,9 * * *"
+    - cron: "0 2 * * *"
+    - cron: "0 2,9 * * *"
   
 jobs:
   setup:
