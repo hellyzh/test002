@@ -9,8 +9,8 @@ on:
         description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
         required: false
   schedule:
-    - cron: "0 2 * * *"
-    - cron: "0 2,9 * * *"
+    - cron: "0 4 * * *"
+    - cron: "10 4,9 * * *"
   
 jobs:
   setup:
@@ -130,17 +130,12 @@ jobs:
         run: echo ${{ needs.setup.outputs.tv2 }}
 
       - name: main-dev
-        run: cat devupdate.txt
+        run: echo main
 
       - name: echo element
         id: jobb1
         run: |
           echo "::set-output name=v1::v1v"
-
-      - name: hello
-        uses: hellyzh/test003@main
-        with:
-          who-to-greet: 'Mona the Octocat'
 
   test2:
     runs-on: ubuntu-latest
