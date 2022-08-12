@@ -103,50 +103,9 @@ jobs:
 
       - name: echo test
         run: echo ${{ steps.job1.outputs.tv2 }} ${{ steps.job-id.outputs.ele-tt }}
-
-  buildAndTest:
-    runs-on: ubuntu-latest
-    needs: setup
-    strategy:
-      fail-fast: false
-      matrix:
-        cases: ${{ fromJson(needs.setup.outputs.cases) }}
-    name: ${{ matrix.cases }}
-    outputs:
-      v1: ${{steps.jobb1.outputs.v1}}
-    steps:
-      # Setup environment.
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
- 
-      - name: Build the project
-        run: echo ${{github.ref}}
-
-      - name: Build the project
-        run: cat devupdate.txt
-
-      - name: print variable2
-        run: echo ${{ needs.setup.outputs.tv2 }}
-
-      - name: main-dev
-        run: echo main
-
-      - name: echo element
-        id: jobb1
-        run: |
-          echo "::set-output name=v1::v1v"
-
-  test2:
-    runs-on: ubuntu-latest
-    needs: [setup, buildAndTest]
-    steps:
-      # Setup environment.
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: print variable2
-        run: |
-          echo ${{ needs.setup.outputs.tv2 }}
-          echo ${{ needs.buildAndTest.outputs.v1 }}
+        
+      - name: echo test
+        run: echo ${{ github.GITHUB_RUN_ATTEMPT }} ${{ github.event_name }}
+        
+      - name: echo test
+        run: exit 1
