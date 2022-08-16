@@ -104,8 +104,5 @@ jobs:
       - name: echo test
         run: echo ${{ steps.job1.outputs.tv2 }} ${{ steps.job-id.outputs.ele-tt }}
         
-      - name: echo test
+      - name: echo test2
         run: echo ${{ github.GITHUB_RUN_ATTEMPT }} ${{ github.event_name }}
-        
-      - name: echo test
-        run: exit 1
