@@ -135,4 +135,7 @@ jobs:
     steps:
       - name: show matrix value
         run: |
-          echo ${{ matrix.test-case }} (${{ matrix.os }}, node ${{ matrix.node-version }}) from ${{github.ref}}
+          echo ${{ matrix.test-case }}
+          echo ${{ matrix.os }}
+          echo "node "${{ matrix.node-version }}
+          echo "from "${{github.ref}}
