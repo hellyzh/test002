@@ -1,43 +1,56 @@
-# This is just an example workflow for continuous integration.
-# You should customize it to meet your own requirements.
-name: 'Continuous Integration'
+name: uitest
+
 on:
-  # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
     inputs:
       tag:
         description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
         required: false
+      test-case:
+        description: 'test case, e.g. ["localdebug-tab", "localdebug-bot"], Set empty to run all predefined cases'
+        required: false
+      os:
+        default: '["ubuntu-latest"]'
+        description: 'os, e.g. ["macos-latest", "self-hosted", "ubuntu-latest", "windows-latest"]'
+        required: false
+      node-version:
+        default: '[16]'
+        description: "node version, e.g. [16]"
+        required: false
+      enable-email:
+        description: "email notification"
+        required: false
+      ab-testing-group:
+        description: "ab testing group, should be a number. e.g. 1"
+        required: false
   schedule:
-    - cron: "0 4 * * *"
-    - cron: "10 4,9 * * *"
-  
-jobs:
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      cases: ${{steps.job1.outputs.cases}}
-      tv2: ${{steps.job1.outputs.tv2}}
-    steps:
-      - name: echo element
-        id: job1
-        run: |
-          echo "::set-output name=cases::[10]"
-          echo "::set-output name=tv2::test-tv2"
+    - cron: "0 2 * * *"
+    - cron: "0 5,9 * * *"
 
-      - name: schedule name
-        run: |
-          echo ${{ github.event_name }}
+  push:
+    branches:
+      - main
+      - dev
+      - rc
+    paths:
+      - "**.ts"
+
+jobs:
+  setup-matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Check if scheduled test
         id: check-if-scheduled-test
         run: |
           if [ ! -z "${{ github.event.schedule }}" ]; then
-            if [ "${{ github.event.schedule }}" == '35 1 * * *' ]; then
+            if [ "${{ github.event.schedule }}" == '0 2 * * *' ]; then
               echo "::set-output name=scheduled-stable-release::true"
             fi
 
-            if [ "${{ github.event.schedule }}" == '40 1,9 * * *' ]; then
+            if [ "${{ github.event.schedule }}" == '0 5,9 * * *' ]; then
               echo "::set-output name=scheduled-daily-release::true"
             fi
           fi
@@ -58,14 +71,8 @@ jobs:
             fi
           else
             if [ "${{ github.ref_name }}" == 'main' ]; then
-              if [ ${{ steps.check-if-scheduled-test.outputs.scheduled-stable-release }} ]; then
-                echo "::set-output name=release-tag::stable"
-                echo scheduledstable
-              fi
-
               if [ ${{ steps.check-if-scheduled-test.outputs.scheduled-daily-release }} ]; then
                 echo "::set-output name=release-tag::alpha"
-                echo scheduledalpha
               else
                 echo "::set-output name=release-tag::stable"
               fi
@@ -78,75 +85,54 @@ jobs:
             fi
           fi
 
-      - name: print release tag
-        run: |          
+      - name: Print release tag
+        run: |
           echo ${{ steps.get-release-tag.outputs.release-tag }}
 
-      - name: print scheduled variable
+      - name: Setup matrix combinations from file (PR && Schedule trigger)
+        if: (!github.event.inputs.test-case)
+        id: setup-matrix-combinations-file
         run: |
-          echo stable_variable      
-          echo ${{ steps.check-if-scheduled-test.outputs.scheduled-stable-release }}
-          echo daily_variable
-          echo ${{ steps.check-if-scheduled-test.outputs.scheduled-daily-release }}
-
-      - name: element2
-        id: job-id
-        run: |
-          echo "::set-output name=ele-tt::ele-tt-value"
-          echo  ${{github.ref_name}}
-          echo again
-          if [ ${{github.ref_name}} == 'main' ]; then
-            echo main
+          if [ "${{ github.event_name }}" == 'push' ]; then
+            JSON=$(cat ./.github/workflows/test-case-push.json)
           else
-            echo other
+            if [ "${{ steps.get-release-tag.outputs.release-tag }}" == "stable" ]; then
+              JSON=$(cat ./.github/workflows/test-case-stable.json)
+            elif [ "${{ steps.get-release-tag.outputs.release-tag }}" == "rc" ]; then
+              JSON=$(cat ./.github/workflows/test-case-rc.json)
+            else
+              JSON=$(cat ./.github/workflows/test-case-all.json)
+            fi
           fi
+          JSONInLine=$(echo ${JSON})
+          echo "::set-output name=matrix-combinations::${JSONInLine}"
 
-      - name: echo test
-        run: echo ${{ steps.job1.outputs.tv2 }} ${{ steps.job-id.outputs.ele-tt }}
+      - name: Setup matrix combinations from input (Manually trigger)
+        if: github.event.inputs.test-case
+        id: setup-matrix-combinations-json
+        run: |
+          JSON='{"node-version": ${{github.event.inputs.node-version}}, "test-case": ${{github.event.inputs.test-case}}, "os": ${{github.event.inputs.os}} }'
+          echo "::set-output name=matrix-combinations::${JSON}"
+    outputs:
+      matrix-combinations: ${{ steps.setup-matrix-combinations-file.outputs.matrix-combinations ||  steps.setup-matrix-combinations-json.outputs.matrix-combinations}}
+      release-tag: ${{steps.get-release-tag.outputs.release-tag}}      
+      scheduled-stable-release: ${{steps.check-if-scheduled-test.outputs.scheduled-stable-release}}
+      scheduled-daily-release: ${{steps.check-if-scheduled-test.outputs.scheduled-daily-release}}
 
-  buildAndTest:
-    runs-on: ubuntu-latest
-    needs: setup
+main:
+    name: ${{ matrix.test-case }} (${{ matrix.os }}, node ${{ matrix.node-version }}) from ${{github.ref}}
+    needs: setup-matrix
+    timeout-minutes: 90
+    outputs:
+      release-version: ${{steps.download-release.outputs.release-version}}
+      uitest-executed: ${{steps.set-uitest-executed.outputs.uitest-executed}}
     strategy:
       fail-fast: false
-      matrix:
-        cases: ${{ fromJson(needs.setup.outputs.cases) }}
-    name: ${{ matrix.cases }}
-    outputs:
-      v1: ${{steps.jobb1.outputs.v1}}
+      matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix-combinations) }}
+
+    runs-on: ${{ matrix.os }}
+
     steps:
-      # Setup environment.
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
- 
-      - name: Build the project
-        run: echo ${{github.ref}}
-
-      - name: Build the project
-        run: cat devupdate.txt
-
-      - name: print variable2
-        run: echo ${{ needs.setup.outputs.tv2 }}
-
-      - name: main-dev
-        run: echo main
-
-      - name: echo element
-        id: jobb1
+      - name: show matrix value
         run: |
-          echo "::set-output name=v1::v1v"
-
-  test2:
-    runs-on: ubuntu-latest
-    needs: [setup, buildAndTest]
-    steps:
-      # Setup environment.
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: print variable2
-        run: |
-          echo ${{ needs.setup.outputs.tv2 }}
-          echo ${{ needs.buildAndTest.outputs.v1 }}
+          echo ${{ matrix.test-case }} (${{ matrix.os }}, node ${{ matrix.node-version }}) from ${{github.ref}}

@@ -1,0 +1,14 @@
+{
+  "include": [
+    {
+      "os": "ubuntu-latest",
+      "test-case": "localdebug-bot",
+      "node-version": 14
+    },
+    {
+      "os": "windows-latest",
+      "test-case": "localdebug-bot",
+      "node-version": 14
+    }
+  ]
+}

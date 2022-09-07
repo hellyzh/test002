@@ -1,0 +1,13 @@
+{
+  "os": [
+    "windows-latest",
+    "ubuntu-latest"
+  ],
+  "node-version": [
+    16
+  ],
+  "test-case": [
+    "localdebug-function",
+    "localdebug-tabbot"
+  ]
+}
