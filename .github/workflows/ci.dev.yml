@@ -119,7 +119,7 @@ jobs:
       scheduled-stable-release: ${{steps.check-if-scheduled-test.outputs.scheduled-stable-release}}
       scheduled-daily-release: ${{steps.check-if-scheduled-test.outputs.scheduled-daily-release}}
 
-main:
+  main:
     name: ${{ matrix.test-case }} (${{ matrix.os }}, node ${{ matrix.node-version }}) from ${{github.ref}}
     needs: setup-matrix
     timeout-minutes: 90
