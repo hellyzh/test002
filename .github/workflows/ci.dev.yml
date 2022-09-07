@@ -33,7 +33,7 @@ on:
       - dev
       - rc
     paths:
-      - "**.ts"
+      - "**.*"
 
 jobs:
   setup-matrix:
