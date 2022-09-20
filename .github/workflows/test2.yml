@@ -26,6 +26,7 @@ jobs:
         run: |
           echo "::set-output name=cases::[10]"
           echo "::set-output name=tv2::test-tv2"
+          echo "helly2@hellytest.onmicrosoft.com"
       - name: get attempts2
         run: |
           if [ "${{ github.event_name }}" == 'push2' ]; then
