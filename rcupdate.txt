@@ -6,3 +6,4 @@ dev3
 dev5
 dev6
 dev7
+helly2@hellytest.onmicrosoft.com
