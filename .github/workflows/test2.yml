@@ -27,5 +27,5 @@ jobs:
 
       - name: echo env
         run: |
-          npx ts-node src/a.ts
+          ls
 
