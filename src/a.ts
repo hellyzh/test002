@@ -1,0 +1,1 @@
+console.log(`M365:${process.env.M365_USERNAME}`);

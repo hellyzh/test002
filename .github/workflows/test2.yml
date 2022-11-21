@@ -24,3 +24,9 @@ jobs:
           echo "::set-output name=cases::[10]"
           echo "::set-output name=tv2::test-tv2"
           echo "helly2@hellytest.onmicrosoft.com"
+
+      - name: echo env
+        id: job1
+        run: |
+          npx ts-node src/a.ts
+
