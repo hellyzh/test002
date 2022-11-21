@@ -8,15 +8,12 @@ on:
       tag:
         description: 'vsix release tag. e.g. stable, rc or leave it empty to use latest daily release'
         required: false
-  push:
-   branches:
-    - main
-    - dev
-    - rc
   
 jobs:
   setup:
     runs-on: ubuntu-latest
+    env:
+      M365_USERNAME: testm365
     outputs:
       cases: ${{steps.job1.outputs.cases}}
       tv2: ${{steps.job1.outputs.tv2}}
@@ -27,15 +24,3 @@ jobs:
           echo "::set-output name=cases::[10]"
           echo "::set-output name=tv2::test-tv2"
           echo "helly2@hellytest.onmicrosoft.com"
-      - name: get attempts2
-        run: |
-          if [ "${{ github.event_name }}" == 'push2' ]; then
-            echo push4
-          else
-            if [ "${{ github.event_name }}" == 'push' ]; then
-              echo push2
-            else
-              echo push3
-            fi            
-          fi
-
