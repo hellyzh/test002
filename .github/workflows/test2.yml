@@ -27,5 +27,5 @@ jobs:
 
       - name: echo env
         run: |
-          ls
+          ls -la
 
