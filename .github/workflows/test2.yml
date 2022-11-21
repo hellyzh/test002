@@ -18,6 +18,16 @@ jobs:
       cases: ${{steps.job1.outputs.cases}}
       tv2: ${{steps.job1.outputs.tv2}}
     steps:
+
+      - name: Checkout dev branch
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Install npm packages
+        run: |
+          npm install
+
       - name: echo element
         id: job1
         run: |
@@ -27,5 +37,5 @@ jobs:
 
       - name: echo env
         run: |
-          ls -la
+          npx ts-node src/a.ts
 
