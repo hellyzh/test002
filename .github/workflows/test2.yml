@@ -9,7 +9,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     env:
-      M365_USERNAME: testm365
+      M365_USERNAME: test04@xxbdw.onmicrosoft.com
     outputs:
       cases: ${{steps.job1.outputs.cases}}
       tv2: ${{steps.job1.outputs.tv2}}
