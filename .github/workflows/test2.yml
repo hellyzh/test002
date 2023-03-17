@@ -32,7 +32,7 @@ jobs:
 
       - name: Set azure account (win)
         run: |
-          echo 'M365_USERNAME=${{ secrets.M365_USERNAME }}' >> $env:GITHUB_ENV
+          echo "M365_USERNAME=${{ secrets.M365_USERNAME }}" >> $env:GITHUB_ENV
 
 
       - name: echo env
