@@ -34,6 +34,11 @@ jobs:
         run: |
           echo "M365_USERNAME=abc" >> $env:GITHUB_ENV
 
+      - name: Use the value
+        id: step_two
+        run: |
+          echo "${{ env.M365_USERNAME }}"
+
 
       - name: echo env
         run: |
