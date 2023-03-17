@@ -9,7 +9,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     env:
-      M365_USERNAME: test04@xxbdw.onmicrosoft.com
+      M365_USERNAME1: test04@xxbdw.onmicrosoft.com
     outputs:
       cases: ${{steps.job1.outputs.cases}}
       tv2: ${{steps.job1.outputs.tv2}}
@@ -31,7 +31,6 @@ jobs:
           echo "M365_USERNAME=$username" >> $GITHUB_ENV
 
       - name: Set azure account (win)
-        if: matrix.os == 'windows-latest'
         run: |
           $username='${{ secrets.M365_USERNAME }}'
           echo "M365_USERNAME=$username" >> $env:GITHUB_ENV
