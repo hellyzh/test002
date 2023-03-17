@@ -37,7 +37,7 @@ jobs:
       - name: Use the value
         id: step_two
         run: |
-          echo "${{ env.M365_USERNAME }}"
+          echo "${{ $env:M365_USERNAME }}"
 
 
       - name: echo env
