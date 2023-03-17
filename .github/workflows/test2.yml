@@ -24,12 +24,18 @@ jobs:
         run: |
           npm install
 
-      - name: echo element
-        id: job1
+      - name: Set azure account (ubuntu)
+        if: matrix.os == 'ubuntu-latest'
         run: |
-          echo "::set-output name=cases::[10]"
-          echo "::set-output name=tv2::test-tv2"
-          echo "helly2@hellytest.onmicrosoft.com"
+          username='${{ secrets.M365_USERNAME }}'
+          echo "M365_USERNAME=$username" >> $GITHUB_ENV
+
+      - name: Set azure account (win)
+        if: matrix.os == 'windows-latest'
+        run: |
+          $username='${{ secrets.M365_USERNAME }}'
+          echo "M365_USERNAME=$username" >> $env:GITHUB_ENV
+
 
       - name: echo env
         run: |
