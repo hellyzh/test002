@@ -29,12 +29,6 @@ jobs:
           username='${{ secrets.M365_USERNAME }}'
           echo "M365_USERNAME=$username" >> $GITHUB_ENV
 
-      - name: Set azure account (win)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          username='${{ secrets.M365_USERNAME }}'
-          echo "M365_USERNAME=$username" >> $env:GITHUB_ENV
-
       - name: Use the value
         id: step_two
         run: |
@@ -44,4 +38,11 @@ jobs:
       - name: echo env
         run: |
           npx ts-node src/a.ts
+
+      - name: upload release info to artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release
+          path: |
+            *.vsix
 
