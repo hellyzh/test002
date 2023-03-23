@@ -11,7 +11,7 @@ jobs:
     env:
       M365_USERNAME1: test04@xxbdw.onmicrosoft.com
     outputs:
-      cases: ${{ steps.job1.outputs.cases }}
+      cases: ${{ env.cases }}
     steps:
 
       - name: Checkout dev branch
@@ -24,9 +24,8 @@ jobs:
           npm install
 
       - name: set env
-        id: job1
         run: |
-          echo "cases=This is cases variable" >> $GITHUB_OUTPUT
+          echo "cases=This is cases variable" >> $GITHUB_ENV
 
       - name: get env
         run: |
