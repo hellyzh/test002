@@ -54,9 +54,9 @@ jobs:
           echo 1
           
           echo 2
-          
+          echo '${{ needs.setup.outputs.cases }}'
           echo 3
-          
+          echo "${{ needs.setup.outputs.cases }}"
           echo 4
           echo ${{ needs.setup.outputs.cases }}
 
