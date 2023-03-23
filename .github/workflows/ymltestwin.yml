@@ -1,0 +1,74 @@
+# This is just an example workflow for continuous integration.
+# You should customize it to meet your own requirements.
+name: 'test-yml'
+on:
+  # Manually trigger this workflow, and you should pick the right branch.
+  workflow_dispatch:
+  
+jobs:
+  setup:
+    runs-on: windows-latest
+    env:
+      M365_USERNAME1: test04@xxbdw.onmicrosoft.com
+    outputs:
+      cases: ${{ env.cases }}
+    steps:
+
+      - name: Checkout dev branch
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Install npm packages
+        run: |
+          npm install
+
+      - name: set env
+        run: |
+          echo "cases=This is cases variable" >> $env:GITHUB_ENV
+
+      - name: get env
+        run: |
+          echo 1
+          echo ${{env.cases}}
+          echo 2
+          echo ${{ env.cases }}
+          echo 3
+          echo 4
+          echo ${{ steps.job1.outputs.cases }}
+
+  main:
+    name: main
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: in main
+        run: |
+          echo main
+
+      - name: get env
+        run: |
+          echo 1
+          echo ${{env.cases}}
+          echo 2
+          echo ${{ env.cases }}
+          echo 3
+          echo $env:cases
+          echo 4
+          echo ${{ needs.setup.outputs.cases }}
+
+  report:
+    needs: [setup, main]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Test Environment
+        run: |
+          echo "This is in double quotation marks"
+          echo 'This is in single quotation mark'
+          echo This is not in quotation marks
