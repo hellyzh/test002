@@ -34,8 +34,6 @@ jobs:
           echo 2
           echo ${{ env.cases }}
           echo 3
-          echo 4
-          echo ${{ steps.job1.outputs.cases }}
 
   main:
     name: main
