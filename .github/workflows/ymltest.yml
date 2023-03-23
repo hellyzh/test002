@@ -31,11 +31,10 @@ jobs:
       - name: get env
         run: |
           echo 1
-          echo ${ env.cases }
+          echo $env.cases
           echo 2
           echo ${{ env.cases }}
           echo 3
-          echo ${ steps.job1.outputs.cases }
           echo 4
           echo ${{ steps.job1.outputs.cases }}
 
