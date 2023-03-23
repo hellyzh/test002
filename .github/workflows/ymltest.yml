@@ -31,7 +31,7 @@ jobs:
       - name: get env
         run: |
           echo 1
-          echo $env.cases
+          echo ${{env.cases}}
           echo 2
           echo ${{ env.cases }}
           echo 3
@@ -49,6 +49,16 @@ jobs:
       - name: in main
         run: |
           echo main
+
+      - name: get env
+        run: |
+          echo 1
+          echo ${{env.cases}}
+          echo 2
+          echo ${{ env.cases }}
+          echo 3
+          echo 4
+          echo ${{ needs.setup.outputs.cases }}
 
   report:
     needs: [setup, main]
