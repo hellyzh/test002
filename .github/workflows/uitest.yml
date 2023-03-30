@@ -37,8 +37,11 @@ jobs:
       - name: Set azure account1 (ubuntu)
         run: |
           a="1"
-          username='${{ secrets.M365_USERNAME_${a} }}'
-          echo "M365_USERNAME=$username" >> $GITHUB_ENV
+          username1='${{ secrets.M365_USERNAME_1 }}'
+          username2='${{ secrets.M365_USERNAME_2 }}'
+          username="username$a"
+          echo "M365_USERNAME=${!username}" >> $GITHUB_ENV
+          echo ${{ github.job }}
 
       - name: Use the value1
         id: step_two
