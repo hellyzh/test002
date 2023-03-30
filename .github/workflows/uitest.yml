@@ -33,9 +33,10 @@ jobs:
         run: |
           echo "${{ env.M365_USERNAME }}"
 
-      - name: Use the value1
+      - name: Use the runid
         run: |
-          echo "${{ github.run_id }}"
+          echo "job id:"
+          echo "${{ github.job }}"
 
 
       - name: Set azure account1 (ubuntu)
