@@ -23,6 +23,7 @@
     "typescript": "^4.7.2"
   },
   "dependencies": {
+    "@azure/msal-node": "^1.16.0",
     "@microsoft/dev-tunnels-management": "^1.0.7360",
     "@microsoft/teamsfx-api": "^0.22.2-alpha.b1d3e067a.0",
     "async-mutex": "^0.4.0",
