@@ -35,7 +35,10 @@ jobs:
 
       - name: get env
         run: |
-          echo ${{ env.AZURE_ACCOUNT_NAME }}
+          echo "${{ env.AZURE_ACCOUNT_NAME }}"
+          accounts="${{ env.AZURE_ACCOUNT_NAME }}"
+          b=accounts.split(";")
+          echo b[0]
 
   main:
     name: main
