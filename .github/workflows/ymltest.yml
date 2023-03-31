@@ -28,12 +28,14 @@ jobs:
         run: |
           echo "cases=This is cases variable" >> $GITHUB_OUTPUT
 
+      - name: set env2
+        run: |
+          $users='${{ secrets.ACCOUNTLIST }}'
+          echo "AZURE_ACCOUNT_NAME=$users" >> $env:GITHUB_ENV
+
       - name: get env
         run: |
-          echo 1
-          echo 2
-          echo 3
-          echo 4
+          echo ${{ env.AZURE_ACCOUNT_NAME }}
 
   main:
     name: main
