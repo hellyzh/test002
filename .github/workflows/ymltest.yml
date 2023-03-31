@@ -37,8 +37,11 @@ jobs:
         run: |
           echo "${{ env.AZURE_ACCOUNT_NAME }}"
           accounts="${{ env.AZURE_ACCOUNT_NAME }}"
-          b=accounts.split(";")
-          echo b[0]
+          b=$(echo $accounts | tr ";" "\n")
+          for addr in $b
+          do
+            echo "> [$addr]"
+          done
 
   main:
     name: main
