@@ -31,7 +31,7 @@ jobs:
       - name: set env2
         run: |
           accounts='${{ secrets.ACCOUNTLIST }}'
-          echo "AZURE_ACCOUNT_NAME=$accounts" >> $env:GITHUB_ENV
+          echo "AZURE_ACCOUNT_NAME=$accounts" >> $GITHUB_ENV
 
       - name: get env
         run: |
