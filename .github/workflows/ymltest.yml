@@ -30,18 +30,17 @@ jobs:
 
       - name: set env2
         run: |
-          users='${{ secrets.ACCOUNTLIST }}'
-          echo "AZURE_ACCOUNT_NAME=$users" >> $env:GITHUB_ENV
+          accounts='${{ secrets.ACCOUNTLIST }}'
+          echo "AZURE_ACCOUNT_NAME=$accounts" >> $env:GITHUB_ENV
 
       - name: get env
         run: |
+          echo env:
           echo "${{ env.AZURE_ACCOUNT_NAME }}"
-          accounts="${{ env.AZURE_ACCOUNT_NAME }}"
-          b=$(echo $accounts | tr ";" "\n")
-          for addr in $b
-          do
-            echo "> [$addr]"
-          done
+
+      - name: echo env
+        run: |
+          npx ts-node src/a.ts
 
   main:
     name: main
@@ -54,17 +53,6 @@ jobs:
       - name: in main
         run: |
           echo main
-
-      - name: get env
-        run: |
-          echo 1
-          
-          echo 2
-          echo '${{ needs.setup.outputs.cases }}'
-          echo 3
-          echo "${{ needs.setup.outputs.cases }}"
-          echo 4
-          echo ${{ needs.setup.outputs.cases }}
 
   report:
     needs: [setup, main]
