@@ -37,8 +37,10 @@ jobs:
         run: |
           echo env:
           echo "${{ env.AZURE_ACCOUNT_NAME }}"
-          accountenv="${{ env.AZURE_ACCOUNT_NAME }}"
+          accountenv=${{ env.AZURE_ACCOUNT_NAME }}
+          echo accountenv0:
           echo ${accountenv[0]}
+          echo accountenv1:
           echo ${accountenv[1]}
           accounts=("helly1@hellytest.onmicrosoft.com" "helly2@hellytest.onmicrosoft.com")
           echo ${accounts[0]}
