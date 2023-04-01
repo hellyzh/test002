@@ -46,9 +46,10 @@ jobs:
           echo ${accounts[0]}
           echo ${accounts[1]}
           length=${#accounts[@]}
+          echo accountenv1:
+          echo ${accounts[$length-1]}
           echo "AZURE_ACCOUNT_NAME=${accounts[$length-1]}" >> $GITHUB_ENV
           echo "${{ env.AZURE_ACCOUNT_NAME }}"
-          echo ${{ env.AZURE_ACCOUNT_NAME }}
 
       - name: echo env
         run: |
