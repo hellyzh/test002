@@ -36,6 +36,7 @@ jobs:
       - name: get env
         run: |
           echo env:
+          echo "${{ env.cases }}"
           echo "${{ env.AZURE_ACCOUNT_NAME }}"
           accountenv=${{ env.AZURE_ACCOUNT_NAME }}
           echo accountenv0:
