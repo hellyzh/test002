@@ -37,16 +37,12 @@ jobs:
         run: |
           echo env:
           echo "${{ env.AZURE_ACCOUNT_NAME }}"
-          OIFS=$IFS
-          IFS=';'
-
-          for account in $accounts
-          do
-            echo "> [$account]"
-          done
-
-          IFS=$OIFS
-
+          accountenv="${{ env.AZURE_ACCOUNT_NAME }}"
+          echo ${accountenv[0]}
+          echo ${accountenv[1]}
+          accounts=("helly1@hellytest.onmicrosoft.com" "helly2@hellytest.onmicrosoft.com")
+          echo ${accounts[0]}
+          echo ${accounts[1]}
 
       - name: echo env
         run: |
