@@ -45,7 +45,7 @@ jobs:
           accounts=("helly1@hellytest.onmicrosoft.com" "helly2@hellytest.onmicrosoft.com")
           echo ${accounts[0]}
           echo ${accounts[1]}
-          length=echo ${#accounts[@]}
+          length=${#accounts[@]}
           echo "AZURE_ACCOUNT_NAME=${accounts[$length-1]}" >> $GITHUB_ENV
           echo "${{ env.AZURE_ACCOUNT_NAME }}"
           echo ${{ env.AZURE_ACCOUNT_NAME }}
