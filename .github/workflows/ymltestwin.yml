@@ -35,7 +35,7 @@ jobs:
           $users.Add("${{ secrets.M365_USERNAME_2 }}")
           $users.Add("${{ secrets.M365_USERNAME_3 }}")
           $users.Add("${{ secrets.M365_USERNAME_4 }}")
-          $index=Get-Random -min 0 -max $users.length
+          $index=Get-Random -min 0 -max $users.count
           echo "account index: $index"
           echo "AZURE_ACCOUNT_NAME=$users[$index]" >> $env:GITHUB_ENV
 
