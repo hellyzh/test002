@@ -30,14 +30,11 @@ jobs:
 
       - name: get env
         run: |
-          $users=New-Object System.Collections.ArrayList
-          $users.Add("${{ secrets.M365_USERNAME }}")
-          $users.Add("${{ secrets.M365_USERNAME_2 }}")
-          $users.Add("${{ secrets.M365_USERNAME_3 }}")
-          $users.Add("${{ secrets.M365_USERNAME_4 }}")
-          $index=Get-Random -min 0 -max $users.count
+          $users=@("${{ secrets.M365_USERNAME }}","${{ secrets.M365_USERNAME_2 }}","${{ secrets.M365_USERNAME_3 }}","${{ secrets.M365_USERNAME_4 }}")
+          $index=Get-Random -min 0 -max $users.length
+          $user=$users[$index]
           echo "account index: $index"
-          echo "AZURE_ACCOUNT_NAME=$users[$index]" >> $env:GITHUB_ENV
+          echo "AZURE_ACCOUNT_NAME=$user" >> $env:GITHUB_ENV
 
       - name: echo env
         run: |
