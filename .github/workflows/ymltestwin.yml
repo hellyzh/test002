@@ -35,6 +35,10 @@ jobs:
           echo "account index: $index"
           echo "AZURE_ACCOUNT_NAME=$users[$index]" >> $env:GITHUB_ENV
 
+      - name: echo env
+        run: |
+          npx ts-node src/a.ts
+
   main:
     name: main
     needs: setup
