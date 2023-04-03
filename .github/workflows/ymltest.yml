@@ -31,8 +31,8 @@ jobs:
       - name: set env3
         run: |
           users=("${{ secrets.M365_USERNAME }}" "${{ secrets.M365_USERNAME_2 }}" "${{ secrets.M365_USERNAME_3 }}" "${{ secrets.M365_USERNAME_4 }}")
-          length=${#users[@]}
-          index=$((RANDOM%$length))
+          count=${#users[@]}
+          index=$((RANDOM%$count))
           echo "account index: $index"
           echo "AZURE_ACCOUNT_NAME=${users[index]}" >> $GITHUB_ENV
 
