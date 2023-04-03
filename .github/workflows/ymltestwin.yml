@@ -30,10 +30,10 @@ jobs:
 
       - name: get env
         run: |
-          echo 1
-          echo 2
-          echo 3
-          echo 4
+          $users=@("${{ secrets.M365_USERNAME }}","${{ secrets.M365_USERNAME_2 }}","${{ secrets.M365_USERNAME_3 }}","${{ secrets.M365_USERNAME_4 }}")
+          $index=Get-Random -min 0 -max $users.length
+          echo "account index: $index"
+          echo "AZURE_ACCOUNT_NAME=$users[$index]" >> $env:GITHUB_ENV
 
   main:
     name: main
@@ -46,17 +46,6 @@ jobs:
       - name: in main
         run: |
           echo main
-
-      - name: get env
-        run: |
-          echo 1
-          
-          echo 2
-          echo '${{ needs.setup.outputs.cases }}'
-          echo 3
-          echo "${{ needs.setup.outputs.cases }}"
-          echo 4
-          echo ${{ needs.setup.outputs.cases }}
 
   report:
     needs: [setup, main]

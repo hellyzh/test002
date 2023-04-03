@@ -30,31 +30,11 @@ jobs:
 
       - name: set env3
         run: |
-          echo "cases2=This is cases variable" >> $GITHUB_ENV
-
-      - name: set env2
-        run: |
-          accounts='${{ secrets.ACCOUNTLIST }}'
-          echo "AZURE_ACCOUNT_NAME=$accounts" >> $GITHUB_ENV
-
-      - name: get env
-        run: |
-          echo env:
-          echo "${{ env.cases2 }}"
-          echo "${{ env.AZURE_ACCOUNT_NAME }}"
-          accountenv=${{ env.AZURE_ACCOUNT_NAME }}
-          echo accountenv0:
-          echo ${accountenv[0]}
-          echo accountenv1:
-          echo ${accountenv[1]}
-          accounts=("helly1@hellytest.onmicrosoft.com" "helly2@hellytest.onmicrosoft.com")
-          echo ${accounts[0]}
-          echo ${accounts[1]}
-          length=${#accounts[@]}
-          echo accountenv1:
-          echo ${accounts[$length-1]}
-          echo "AZURE_ACCOUNT_NAME=${accounts[$length-1]}" >> $GITHUB_ENV
-          echo "${{ env.AZURE_ACCOUNT_NAME }}"
+          users=("${{ secrets.M365_USERNAME }}" "${{ secrets.M365_USERNAME_2 }}" "${{ secrets.M365_USERNAME_3 }}" "${{ secrets.M365_USERNAME_4 }}")
+          length=${#users[@]}
+          index=$((RANDOM%$length))
+          echo "account index: $index"
+          echo "AZURE_ACCOUNT_NAME=${users[index]}" >> $GITHUB_ENV
 
       - name: echo env
         run: |
