@@ -51,12 +51,17 @@ jobs:
       - name: in main
         if: contains('aHelloTest', 'hello')
         run: |
-          echo main
+          echo main1
 
       - name: in main 2
         if: contains('aHelloTest', 'Hello')
         run: |
-          echo main
+          echo main2
+
+      - name: in main 2
+        if: contains('aHelloTest', 'Hello2')
+        run: |
+          echo main3
 
       - name: Setup node
         uses: actions/setup-node@v3
