@@ -49,12 +49,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: in main
-        if: contains("aHelloTest", "hello")
+        if: contains('aHelloTest', 'hello')
         run: |
           echo main
 
       - name: in main 2
-        if: contains("aHelloTest", "Hello")
+        if: contains('aHelloTest', 'Hello')
         run: |
           echo main
 
