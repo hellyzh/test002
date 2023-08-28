@@ -52,6 +52,25 @@ jobs:
         run: |
           echo main
 
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: node version
+        run: |
+          node -v
+
+      - name: Setup node 2
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: node version
+        run: |
+          node -v
+
+
   report:
     needs: [setup, main]
     runs-on: ubuntu-latest
