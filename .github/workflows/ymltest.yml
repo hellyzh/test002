@@ -64,10 +64,17 @@ jobs:
 
       - name: Send E-mail
         run: |
+          response=$(curl \
+            --request POST \
+            --header "Content-Type: application/x-www-form-urlencoded" \
+            --data "grant_type=client_credentials&client_id=f267696e-11b9-4c8a-8161-526b2cf84cfa&client_secret=${{ secrets.aadtoken }}&resource=https://management.core.windows.net"
+              "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token")
+          echo $response
+
           curl \
             --request POST \
             --header "Content-Type: application/json" \
-            --header "Authorization: Bearer ${{ secrets.aadtoken }}" \
+            --header "Authorization: Bearer $response.access_token" \
             --data '{"to": "v-helzha@microsoft.com", "emailbody": "test-body", "subject": "test-title"}' \
             'https://prod-79.eastus.logic.azure.com:443/workflows/cd1047f914534ad28b4bf2cad679b1af/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0'
 
