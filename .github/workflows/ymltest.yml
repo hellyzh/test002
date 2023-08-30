@@ -68,7 +68,7 @@ jobs:
             --request POST \
             --header "Content-Type: application/json" \
             --header "Authorization: Bearer ${{ secrets.aadtoken }}" \
-            --data '{"to": "v-helzha@microsoft.com", "body": "test-body", "subject": "test-title"}' \
+            --data '{"to": "v-helzha@microsoft.com", "emailbody": "test-body", "subject": "test-title"}' \
             'https://prod-79.eastus.logic.azure.com:443/workflows/cd1047f914534ad28b4bf2cad679b1af/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0'
 
   report:
