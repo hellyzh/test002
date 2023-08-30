@@ -68,14 +68,14 @@ jobs:
             --request POST \
             --header "Content-Type: application/x-www-form-urlencoded" \
             --data "grant_type=client_credentials&client_id=f267696e-11b9-4c8a-8161-526b2cf84cfa&client_secret=${{ secrets.aadtoken }}&resource=https://management.core.windows.net"
-              "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token"
+            "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token"
           
           echo "set.."   
           response=$(curl \
             --request POST \
             --header "Content-Type: application/x-www-form-urlencoded" \
             --data "grant_type=client_credentials&client_id=f267696e-11b9-4c8a-8161-526b2cf84cfa&client_secret=${{ secrets.aadtoken }}&resource=https://management.core.windows.net"
-              "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token")
+            "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token")
           echo $response
 
           curl \
