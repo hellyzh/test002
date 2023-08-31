@@ -67,15 +67,15 @@ jobs:
           response=$(curl \
             --request POST \
             --header "Content-Type: application/x-www-form-urlencoded" \
-            --data "grant_type=client_credentials&client_id=23efa823-1051-4b5e-896b-4227846a1507&client_secret=${{ secrets.aadtoken }}&resource=https://management.core.windows.net" \
-            "https://login.microsoftonline.com/f1d0f931-afbd-456a-8c2a-89c86c074c52/oauth2/token")
+            --data "grant_type=client_credentials&client_id=${{ secrets.TEST_CLEAN_CLIENT_ID }}&client_secret=${{ secrets.TEST_CLEAN_CLIENT_SECRET }}&resource=https://management.core.windows.net" \
+            "https://login.microsoftonline.com/${{ secrets.TEST_CLEAN_TENANT_ID }}/oauth2/token")
 
-          token=`echo $response | jq -r '. | select(.access_token) | .access_token'`
+          access_token=`echo $response | jq -r '. | select(.access_token) | .access_token'`
 
           curl \
             --request POST \
             --header "Content-Type: application/json" \
-            --header "Authorization: Bearer $token" \
+            --header "Authorization: Bearer $access_token" \
             --data '{"to": "v-helzha@microsoft.com", "body": "test-body", "subject": "test-title"}' \
             'https://prod-18.northcentralus.logic.azure.com:443/workflows/b33d7861bfc64832a6f62cc8f2213988/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0'
 
