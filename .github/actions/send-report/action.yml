@@ -1,0 +1,12 @@
+name: Hello World
+description: Hello World
+runs:
+  using: "composite"
+  steps:
+    - run: |
+          echo hello
+      shell: bash
+    - run: |
+          echo hello2
+      shell: bash
+      id: hello2

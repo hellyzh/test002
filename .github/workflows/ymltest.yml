@@ -62,6 +62,9 @@ jobs:
         run: |
           node -v
 
+      - name: Hello World2
+        uses: ./.github/actions/send-report
+
       - name: Send E-mail
         run: |
           response=$(curl \
