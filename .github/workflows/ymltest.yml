@@ -55,6 +55,7 @@ jobs:
           echo main1
           echo "to=v-helzha@microsoft.com" >> $GITHUB_OUTPUT
           echo "body=test from action" >> $GITHUB_OUTPUT
+          echo "subject=title from action" >> $GITHUB_OUTPUT
 
       - name: Setup node 2
         uses: actions/setup-node@v3
@@ -70,6 +71,7 @@ jobs:
         env:
           TO: ${{ steps.list-jobs.outputs.to }}
           BODY: ${{ steps.list-jobs.outputs.body }}
+          SUBJECT: ${{ steps.list-jobs.outputs.subject }}
           MAIL_CLIENT_ID: ${{ secrets.TEST_CLEAN_CLIENT_ID }}
           MAIL_CLIENT_SECRET: ${{ secrets.TEST_CLEAN_CLIENT_SECRET }}
           MAIL_TENANT_ID: ${{ secrets.TEST_CLEAN_TENANT_ID }}
