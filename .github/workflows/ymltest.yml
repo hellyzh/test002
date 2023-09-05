@@ -71,7 +71,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const responseBody = "<p>Microsoft Graph Toolkit v";
+            const responseBody = "<p>Microsoft Graph Toolkit v" + "5.0.1 has been released.\n Details can be found here: https://github.com/microsoftgraph/microsoft-graph-toolkit/releases/tag/v5.0.1";
             return responseBody;
 
       - name: Hello World2
