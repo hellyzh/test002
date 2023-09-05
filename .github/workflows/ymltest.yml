@@ -45,9 +45,6 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
       - name: in main
         if: contains('aHelloTest', 'hello')
         run: |
