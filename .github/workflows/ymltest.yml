@@ -68,7 +68,11 @@ jobs:
       - name: Hello World2
         uses: ./.github/actions/send-report
         env:
-          to: ${{ steps.list-jobs.outputs.to }}
+          TO: ${{ steps.list-jobs.outputs.to }}
+          BODY: ${{ steps.list-jobs.outputs.to }}
+          MAIL_CLIENT_ID: ${{ secrets.TEST_CLEAN_CLIENT_ID }}
+          MAIL_CLIENT_SECRET: ${{ secrets.TEST_CLEAN_CLIENT_SECRET }}
+          MAIL_TENANT_ID: ${{ secrets.TEST_CLEAN_TENANT_ID }}
 
       - name: Send E-mail
         run: |
