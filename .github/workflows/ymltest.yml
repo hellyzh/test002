@@ -45,10 +45,16 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: in main
         if: contains('aHelloTest', 'hello')
+        id: list-jobs
         run: |
           echo main1
+          echo "to=v-helzha@microsoft.com" >> $GITHUB_OUTPUT
+          echo "body=test from action" >> $GITHUB_OUTPUT
 
       - name: Setup node 2
         uses: actions/setup-node@v3
@@ -61,6 +67,8 @@ jobs:
 
       - name: Hello World2
         uses: ./.github/actions/send-report
+        env:
+          to: ${{ steps.list-jobs.outputs.to }}
 
       - name: Send E-mail
         run: |

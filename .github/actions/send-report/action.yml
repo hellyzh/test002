@@ -1,10 +1,23 @@
-name: Hello World
-description: Hello World
+name: Send Report
+description: Send Email Report
 runs:
   using: "composite"
   steps:
     - run: |
-          echo hello
+          response=$(curl \
+            --request POST \
+            --header "Content-Type: application/x-www-form-urlencoded" \
+            --data "grant_type=client_credentials&client_id=${{ secrets.TEST_CLEAN_CLIENT_ID }}&client_secret=${{ secrets.TEST_CLEAN_CLIENT_SECRET }}&resource=https://management.core.windows.net" \
+            "https://login.microsoftonline.com/${{ secrets.TEST_CLEAN_TENANT_ID }}/oauth2/token")
+
+          access_token=`echo $response | jq -r '. | select(.access_token) | .access_token'`
+
+          curl \
+            --request POST \
+            --header "Content-Type: application/json" \
+            --header "Authorization: Bearer $access_token" \
+            --data '{"to": "${{ env.to }}", "body": "${{ env.body }}", "subject": "test-title3"}' \
+            'https://prod-18.northcentralus.logic.azure.com:443/workflows/b33d7861bfc64832a6f62cc8f2213988/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0'
       shell: bash
     - run: |
           echo hello2
