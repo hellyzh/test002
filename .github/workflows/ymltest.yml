@@ -71,8 +71,12 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const responseBody = "<p>Microsoft Graph Toolkit v" + "5.0.1 has been released.\n Details can be found here: https://github.com/microsoftgraph/microsoft-graph-toolkit/releases/tag/v5.0.1";
-            return responseBody;
+            const md_to_html = async() => {
+            const note = "testnote";
+            const emailBody = note + "\n\nDetails can be found here: " + "https://example.com";
+            return emailBody;
+            }
+            return md_to_html();
 
       - name: Hello World2
         uses: ./.github/actions/send-report
