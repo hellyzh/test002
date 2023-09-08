@@ -45,6 +45,15 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: Install npm packages
+        run: |
+          npm install axios
+  
+      - name: list 1
+        run: |
+          ls
+          cat package.json 
+
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -53,14 +62,7 @@ jobs:
           ls
           cat package.json
 
-      - name: Install npm packages
-        run: |
-          npm install axios
-  
-      - name: list 1
-        run: |
-          ls
-          cat package.json
+
 
       - name: in main
         if: contains('aHelloTest', 'hello')
