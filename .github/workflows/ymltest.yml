@@ -48,6 +48,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: list 2
+        run: |
+          ls
+          cat package.json
+
+      - name: Install npm packages
+        run: |
+          npm install axios
+  
+      - name: list 1
+        run: |
+          ls
+          cat package.json
+
       - name: in main
         if: contains('aHelloTest', 'hello')
         id: list-jobs
