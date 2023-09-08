@@ -54,7 +54,7 @@ jobs:
         run: |
           echo main1
           echo "to=v-helzha@microsoft.com" >> $GITHUB_OUTPUT
-          echo "body=test from action" >> $GITHUB_OUTPUT
+          echo "body=test from action\n\n" >> $GITHUB_OUTPUT
           echo "subject=title from action" >> $GITHUB_OUTPUT
 
       - name: Setup node 2
@@ -87,7 +87,7 @@ jobs:
         uses: ./.github/actions/send-report
         env:
           TO: ${{ steps.list-jobs.outputs.to }}
-          BODY: ${{ steps.detail.outputs.result }}
+          BODY: ${{ steps.list-jobs.outputs.body }}
           SUBJECT: ${{ steps.list-jobs.outputs.subject }}
           MAIL_CLIENT_ID: ${{ secrets.TEST_CLEAN_CLIENT_ID }}
           MAIL_CLIENT_SECRET: ${{ secrets.TEST_CLEAN_CLIENT_SECRET }}
