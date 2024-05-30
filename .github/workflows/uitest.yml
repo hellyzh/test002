@@ -4,15 +4,17 @@ name: 'uitest'
 on:
   # Manually trigger this workflow, and you should pick the right branch.
   workflow_dispatch:
+    inputs:
+      target-testplan-name:
+          description: "For example: CY230919. Sync test result to this test plan."
+          required: false
+          type: string
   
 jobs:
   setup:
     runs-on: ubuntu-latest
     env:
       M365_USERNAME1: test04@xxbdw.onmicrosoft.com
-    outputs:
-      cases: ${{steps.job1.outputs.cases}}
-      tv2: ${{steps.job1.outputs.tv2}}
     steps:
 
       - name: Checkout dev branch
@@ -52,8 +54,20 @@ jobs:
         run: |
           echo "${{ env.M365_USERNAME }}"
 
-
-      - name: echo env
+  test-plan-update1:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo target-testplan-name1
         run: |
-          npx ts-node src/a.ts
+          echo "${{ github.event.inputs.target-testplan-name }}"
 
+
+  test-plan-update:
+    needs: setup
+    if: ${{ github.event.inputs.target-testplan-name != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo target-testplan-name
+        run: |
+          echo "${{ github.event.inputs.target-testplan-name }}"
