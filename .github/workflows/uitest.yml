@@ -76,7 +76,7 @@ jobs:
     needs: setup
     strategy:
       matrix:
-        node-version: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+        node-version: [1, 2]
     runs-on: ubuntu-latest
     steps:
       - name: echo target-testplan-name
@@ -87,11 +87,11 @@ jobs:
     needs: setup
     strategy:
       matrix:
-        node-version: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
-        node-version2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        node-version: [1, 2, 3]
+        node-version2: [1]
     runs-on: ubuntu-latest
     steps:
       - name: echo target-testplan-name
         run: |
           echo matrix2
-          echo2 ${{ matrix.node-version }}
+          echo ${{ matrix.node-version }}
