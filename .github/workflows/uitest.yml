@@ -81,7 +81,7 @@ jobs:
     steps:
       - name: echo target-testplan-name
         run: |
-          echo ${{ matrix.node-version }}
+          echo1 ${{ matrix.node-version }}
 
   test-matrix2:
     needs: setup
@@ -93,4 +93,4 @@ jobs:
       - name: echo target-testplan-name
         run: |
           echo matrix2
-          echo ${{ matrix.node-version }}
+          echo2 ${{ matrix.node-version }}
